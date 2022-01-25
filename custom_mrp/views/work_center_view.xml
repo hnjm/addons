@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="mrp_workcenter_view_inherit_custom_mrp" model="ir.ui.view">
+            <field name="name">mrp_workcenter_view_inherit_custom_mrp</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='alternative_workcenter_ids']" position="after">
+                    <field name="is_outsource"/>
+                    <field name="partner_id" attrs="{'invisible': [('is_outsource', '=', False)], 'required': [('is_outsource', '=', True)]}"/>
+                </xpath>
+            </field>
+
+        </record>
+    </data>
+</odoo>

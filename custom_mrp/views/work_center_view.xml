@@ -8,7 +8,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='alternative_workcenter_ids']" position="after">
                     <field name="is_outsource"/>
-                    <field name="partner_id" attrs="{'invisible': [('is_outsource', '=', False)], 'required': [('is_outsource', '=', True)]}"/>
+                    <field name="partner_id" invisible="1"/>
                 </xpath>
             </field>
 

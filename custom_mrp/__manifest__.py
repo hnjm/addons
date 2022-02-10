@@ -12,7 +12,9 @@
     "depends": ["base", "mrp_subcontracting", "mrp_workorder"],
     "data": [
         'views/stock_route.xml',
-        'views/work_center_view.xml'
+        'views/work_center_view.xml',
+        'views/mrp_routing_workcenter_view.xml',
+        'views/template_mrp_report_bom_structure.xml'
         ],
     "installable": True,
 }

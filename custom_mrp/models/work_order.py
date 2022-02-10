@@ -1,4 +1,4 @@
-from odoo import api, models, fields
+from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
 from collections import defaultdict
 
@@ -10,10 +10,18 @@ class WorkOrder(models.Model):
         res = super(WorkOrder, self).button_start()
         subcontract_details_per_picking = defaultdict(list)
         for record in self:
-            if record.workcenter_id.is_outsource and record.workcenter_id.partner_id:
-                val_po = {
-                    'partner_id': record.workcenter_id.partner_id.id
-                }
+            if record.workcenter_id.is_outsource:
+                operation_line = record.production_id.bom_id.operation_ids.filtered(lambda x: x.workcenter_id.id == record.workcenter_id.id)
+                val_po = {}
+                if operation_line:
+                    if operation_line[0].partner_id:
+                        val_po = {
+                            'partner_id': operation_line[0].partner_id.id
+                        }
+                    else:
+                        raise UserError(_("Please choose Vendor for Operation in BOM"))
+                else:
+                    raise UserError(_("Please add more Operation Line for BOM"))
                 purchase = self.env['purchase.order'].create(val_po)
                 value_po_line = {
                     'product_id': record.product_id.id,

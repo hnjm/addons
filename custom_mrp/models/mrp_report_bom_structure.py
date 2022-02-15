@@ -12,21 +12,34 @@ class ReportBomStructure(models.AbstractModel):
         operations = []
         total = 0.0
         qty = bom.product_uom_id._compute_quantity(qty, bom.product_tmpl_id.uom_id)
+        total_bom_cost = 0
         for operation in bom.operation_ids:
             if operation._skip_operation_line(product):
                 continue
             operation_cycle = float_round(qty / operation.workcenter_id.capacity, precision_rounding=1, rounding_method='UP')
             duration_expected = operation_cycle * (operation.time_cycle + (operation.workcenter_id.time_stop + operation.workcenter_id.time_start))
             total = ((duration_expected / 60.0) * operation.workcenter_id.costs_hour)
-            operations.append({
-                'level': level or 0,
-                'operation': operation,
-                'name': operation.name + ' - ' + operation.workcenter_id.name,
-                'duration_expected': duration_expected,
-                'total': self.env.company.currency_id.round(total),
-                'product_cost': operation.price_cost or 0,
-                'bom': bom
-            })
+            if operation.workcenter_id.is_outsource:
+                total_bom_cost = operation.price_cost + total
+                operations.append({
+                    'level': level or 0,
+                    'operation': operation,
+                    'name': operation.name + ' - ' + operation.workcenter_id.name,
+                    'duration_expected': duration_expected,
+                    'total': total_bom_cost,
+                    'product_cost': operation.price_cost or 0,
+                    'bom': bom
+                })
+            else:
+                operations.append({
+                    'level': level or 0,
+                    'operation': operation,
+                    'name': operation.name + ' - ' + operation.workcenter_id.name,
+                    'duration_expected': duration_expected,
+                    'total': self.env.company.currency_id.round(total),
+                    'product_cost': operation.price_cost or 0,
+                    'bom': bom
+                })
         return operations
 
     def _get_bom(self, bom_id=False, product_id=False, line_qty=False, line_id=False, level=False):

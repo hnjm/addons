@@ -24,14 +24,13 @@ class ReportBomStructure(models.AbstractModel):
                 'name': operation.name + ' - ' + operation.workcenter_id.name,
                 'duration_expected': duration_expected,
                 'total': self.env.company.currency_id.round(total),
-                'product_cost': operation.price_cost or 0
+                'product_cost': operation.price_cost or 0,
+                'bom': bom
             })
         return operations
 
     def _get_bom(self, bom_id=False, product_id=False, line_qty=False, line_id=False, level=False):
         res = super(ReportBomStructure, self)._get_bom(bom_id, product_id, line_qty, line_id, level)
         operations = res['operations']
-        print(operations)
         res['product_cost'] = sum([op['product_cost'] for op in operations])
-        print(res['product_cost'])
         return res

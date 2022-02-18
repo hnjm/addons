@@ -6,3 +6,5 @@ from . import stock_move
 from . import mrp
 from . import mrp_routing_workcenter
 from . import mrp_report_bom_structure
+from . import product_template
+from . import product_product

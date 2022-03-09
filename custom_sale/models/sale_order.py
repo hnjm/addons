@@ -7,11 +7,6 @@ from collections import defaultdict
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    invoice_status = fields.Selection([
-        ('paid', 'Paid'),
-        ('not_paid', 'Not Paid')
-    ], string='Invoice Status', compute_sudo='True', compute="_compute_invoice_status")
-
     @api.model
     def create(self, vals):
         if 'name' not in vals or vals['name'] == _('New'):

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <record id="sequence_sale_order_seq" model="ir.sequence">
+            <field name="name">Sale Order Sequence</field>
+            <field name="code">sale.order.sequence.abc</field>
+            <field name="prefix">S%(year)s</field>
+            <field eval="1" name="number_next"/>
+             <field name="padding">4</field>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+        <record id="view_quotation_tree_inherit_custom_sale_abc" model="ir.ui.view">
+            <field name="name">view_quotation_tree_inherit_custom_sale_abc</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+               <xpath expr="//field[@name='invoice_status']" position="replace">
+                   <field name="invoice_status"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

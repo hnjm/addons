@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+         <record id="sequence_manufacturing_order_seq" model="ir.sequence">
+            <field name="name">Manufacturing Order Sequence</field>
+            <field name="code">manufacturing.order.sequence.abc</field>
+            <field name="prefix">M%(year)s</field>
+            <field eval="1" name="number_next"/>
+             <field name="padding">4</field>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+        </record>
+    </data>
+</odoo>

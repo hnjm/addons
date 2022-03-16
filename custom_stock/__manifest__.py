@@ -3,15 +3,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "CUSTOM PRODUCT",
+    "name": "CUSTOM STOCK",
     "version": "15E",
-    "category": "PRODUCT MANAGEMENT",
+    "category": "INVENTORY MANAGEMENT",
     "license": "AGPL-3",
     "summary": "",
     "author": "Thai Lao",
-    "depends": ["base", "product"],
+    "depends": ["base", "sale", "sale_management", "account", "stock"],
     "data": [
-        'views/product_view.xml'
+        'views/stock_template.xml',
         ],
     "installable": True,
 }

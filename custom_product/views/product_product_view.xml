@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="product_normal_form_view_inherit_custom_product_abc" model="ir.ui.view">
+            <field name="name">product_normal_form_view_inherit_custom_product_abc</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+               <xpath expr="//page [@name='general_information']" position="after">
+                    <page name="optional_product" string="Optional Product">
+                        <group>
+                            <group>
+                                <field name="optional_product" widget="many2many_tags" context="{'option_product': True, 'product_id': id}"/>
+                            </group>
+                        </group>
+                   </page>
+                </xpath>
+            </field>
+        </record>
+</odoo>

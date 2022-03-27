@@ -9,9 +9,10 @@
     "license": "AGPL-3",
     "summary": "",
     "author": "Thai Lao",
-    "depends": ["base", "purchase","account"],
+    "depends": ["base", "purchase","account", "custom_product"],
     "data": [
         'views/purchase_order_view.xml',
+        'security/ir.model.access.csv',
         ],
     "installable": True,
 }

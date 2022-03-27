@@ -1,4 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+optional_product_access_all,optional_product_access_all,model_optional_product,base.group_user,1,1,1,1
 
 
 

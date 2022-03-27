@@ -11,7 +11,8 @@
     "author": "Thai Lao",
     "depends": ["base", "product"],
     "data": [
-        'views/product_view.xml'
+        'views/product_view.xml',
+        'views/product_product_view.xml'
         ],
     "installable": True,
 }

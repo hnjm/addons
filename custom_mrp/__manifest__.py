@@ -14,7 +14,8 @@
         'views/stock_route.xml',
         'views/work_center_view.xml',
         'views/mrp_routing_workcenter_view.xml',
-        'views/template_mrp_report_bom_structure.xml'
+        'views/template_mrp_report_bom_structure.xml',
+        'views/mrp_bom.xml'
         ],
     "installable": True,
 }

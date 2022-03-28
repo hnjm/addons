@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="mrp.mrp_bom_tree_view"/>
             <field name="arch" type="xml">
                 <field name="type" position="after">
-                    <button name="%(action_report_mrp_bom)d" type="action" class="oe_stat_button" icon="fa-bars" string="Structure &amp; Cost"/>
+                    <button name="%(mrp.action_report_mrp_bom)d" type="action" class="oe_stat_button" icon="fa-bars" string="Structure &amp; Cost"/>
                 </field>
             </field>
         </record>

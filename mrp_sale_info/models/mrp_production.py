@@ -15,7 +15,7 @@ class MrpProduction(models.Model):
     )
     sale_id = fields.Many2one(
         comodel_name="sale.order",
-        string="Sale order",
+        string="Sales Order",
         readonly=True,
         store=True,
         related="source_procurement_group_id.sale_id",

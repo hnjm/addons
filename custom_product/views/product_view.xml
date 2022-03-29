@@ -5,9 +5,37 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_search_view"/>
             <field name="arch" type="xml">
-               <xpath expr="//field[@name='name']" position="before">
+               <xpath expr="//field[@name='name']" position="after">
                    <field name="default_code"/>
+                   <field name="customer_reference"/>
                 </xpath>
             </field>
         </record>
+
+    <record id="product_template_only_form_view_inherit_custom_product_abc" model="ir.ui.view">
+            <field name="name">product_template_only_form_view_inherit_custom_product_abc</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                  <xpath expr="//field[@name='uom_po_id']" position="after">
+                    <field name="fast_accounting_no"/>
+                  </xpath>
+                  <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="customer_reference"/>
+                    <field name="revision"/>
+                    <field name="material"/>
+                  </xpath>
+            </field>
+        </record>
+
+     <record id="ir_cron_update_customer_reference" model="ir.cron">
+        <field name="name">Update Customer Reference</field>
+        <field name="model_id" ref="model_product_template"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_update_customer_reference()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="active">False</field>
+    </record>
 </odoo>

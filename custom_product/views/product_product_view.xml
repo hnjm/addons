@@ -9,7 +9,7 @@
                     <page name="optional_product" string="Optional Product">
                         <group>
                             <group>
-                                <field name="optional_product" widget="many2many_tags" context="{'option_product': True, 'product_id': id}"/>
+                                <field name="optional_product" widget="many2many_tags" domain="[('purchase_ok', '=', True)]" context="{'option_product': True, 'product_id': id}"/>
                             </group>
                         </group>
                    </page>

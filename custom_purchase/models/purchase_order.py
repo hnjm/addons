@@ -63,15 +63,22 @@ class OptionalProduct(models.Model):
 
     def button_select_optional_product(self):
         for record in self:
+            self.ensure_one()
             total = sum(i.product_qty for i in record.purchase_id.order_line.filtered(lambda x: x.product_id.id == record.source_product.id))
             product_uom_id = record.purchase_id.order_line.filtered(lambda x: x.product_id.id == record.source_product.id)[0].product_uom
             record.purchase_id.order_line.filtered(lambda x: x.product_id.id == record.source_product.id).unlink()
+            seller = self.env['product.supplierinfo']
+            if record.optional_product and total:
+                seller = record.optional_product.with_company(record.purchase_id.company_id)._select_seller(
+                    quantity=total,
+                    uom_id=record.optional_product.uom_po_id,
+                )
             values = self.env['purchase.order.line']._prepare_purchase_order_line(
                     record.optional_product,
                     total,
                     product_uom_id,
                     record.purchase_id.company_id,
-                    record.purchase_id.partner_id,
+                    seller,
                     record.purchase_id,
                 )
             self.env['purchase.order.line'].create(values)
@@ -91,7 +98,7 @@ class PurchaseOrderLine(models.Model):
         # _select_seller is used if the supplier have different price depending
         # the quantities ordered.
         seller = product_id.with_company(company_id)._select_seller(
-            partner_id=supplier,
+            partner_id=partner,
             quantity=uom_po_qty,
             date=po.date_order and po.date_order.date(),
             uom_id=product_id.uom_po_id)
@@ -106,8 +113,8 @@ class PurchaseOrderLine(models.Model):
                 price_unit, po.currency_id, po.company_id, po.date_order or fields.Date.today())
 
         product_lang = product_id.with_prefetch().with_context(
-            lang=supplier.lang,
-            partner_id=supplier.id,
+            lang=partner.lang,
+            partner_id=partner.id,
         )
         name = product_lang.with_context(seller_id=seller.id).display_name
         if product_lang.description_purchase:

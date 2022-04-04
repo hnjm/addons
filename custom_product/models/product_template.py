@@ -25,4 +25,5 @@ class ProductTemplate(models.Model):
     @api.model
     def _cron_update_customer_reference(self):
         for record in self.env['product.template'].search([]):
-            record.customer_reference = record.default_code
+            # record.customer_reference = record.default_code
+            record.default_code = record.x_studio_drawing_number

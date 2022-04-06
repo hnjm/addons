@@ -39,6 +39,7 @@ odoo.define('ks_odoo11_web_listview_sticky_header.stick_header', function (requi
                 }
                 $("div[class='o_sub_menu']").css("z-index",4);
             }
+            $(".tableFloatingHeaderOriginal>tr").append("<th><i class='o_optional_columns_dropdown_toggle fa fa-ellipsis-v' style='top: 132.6px;'></i></th>");
         },
 
     _onCellClick: function (event) {
@@ -73,13 +74,13 @@ odoo.define('ks_odoo11_web_listview_sticky_header.stick_header', function (requi
                     },400);
                 }
         });
-        $(".tableFloatingHeaderOriginal>tr").append("<th><i class='o_optional_columns_dropdown_toggle fa fa-ellipsis-v' style='top: 132.6px;'></i></th>");
      },
      _renderBodyCell: function (record, node, colIndex, options) {
             var ks_td_cell = this._super.apply(this, arguments);
             if (this.fieldDecorations[node.attrs.name]){
                 this._setDecorationClasses(ks_td_cell, this.fieldDecorations[node.attrs.name], record);
             }
+            $(".tableFloatingHeaderOriginal>tr").append("<th><i class='o_optional_columns_dropdown_toggle fa fa-ellipsis-v' style='top: 132.6px;'></i></th>");
             return ks_td_cell;
         },
         _setDecorationClasses: function ($el, decorations, record) {

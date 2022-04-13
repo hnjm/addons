@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="action_report_sale_order_template" model="ir.actions.report">
+            <field name="name">Sale Order Template</field>
+            <field name="model">sale.order</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">report_quotation_template.report_sale_order_template</field>
+            <field name="report_file">report_quotation_template.report_sale_order_template</field>
+            <field name="print_report_name">'Sale order'</field>
+            <field name="binding_model_id" ref="model_sale_order"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+    <template id="report_sale_order_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row">
+                            <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                            </div>
+                            <div class="col-5">
+                                <div>
+                                    Company : <t t-esc="o.company_id.name" />
+                                </div>
+                                <div>
+                                    Contact person
+                                </div>
+                                <div>
+                                    Address : <t t-esc="o.partner_id.street" />
+                                </div>
+                                <div>
+                                    Address
+                                </div>
+                                <div>
+                                    Country : <t t-esc="o.partner_id.country_id.name" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr>
+                                  <td colspan="9">
+                                    <div class="row">
+                                        <div class="col-7 text-center mt-3">
+                                            <span style="font-size: 22px; font-weight: bolder">QUOTATION</span>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Quotation number</span>
+                                                    <span style="margin-left: 2px;">:</span>
+                                                    <span class="span-header-three-1"><t t-esc="o.name" /></span>
+                                                </span>
+                                                <span style="margin-left: 40px;">Rev : 00</span>
+                                            </div>
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Quotation date</span>
+                                                    <span style="margin-left: 24px;">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.date_order" /></span>
+                                                </span>
+                                                <span style="margin-left: 15px;">Week :</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="9">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div style="margin-left: 10px">
+                                                <span>Your Reference</span>
+                                                <span style="margin-left: 10px">:</span>
+                                                <span style="margin-left: 10px"><t t-esc="o.client_order_ref" /></span>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <span>Your phone nr.</span>
+                                                <span style="margin-left: 13px">:</span>
+                                                <span style="margin-left: 10px"> <t t-esc="o.partner_id.phone" /></span>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <span>Your e-mail</span>
+                                                <span style="margin-left: 35px">:</span>
+                                                <span style="margin-left: 10px"><t t-esc="o.partner_id.email" /></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-left">
+                                                <span>
+                                                    <span>Validity Quotation</span>
+                                                    <span style="margin-left:10px">:</span>
+                                                    <span class="span-header-three-1"><t t-esc="o.validity_quotation()" /> </span>
+                                                </span>
+                                            </div>
+                                            <div class="text-left">
+                                                <span>
+                                                    <span>Incoterms</span>
+                                                    <span style="margin-left: 70px">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.incoterm.name" /></span>
+                                                </span>
+                                            </div>
+                                            <div class="text-left">
+                                                <span>
+                                                    <span>Terms of payment</span>
+                                                    <span style="margin-left: 15px">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.payment_term_id.name" /></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>Line</td>
+                                  <td>Item nr.</td>
+                                  <td>Rev</td>
+                                  <td>Description</td>
+                                  <td>Quantity</td>
+                                  <td>$</td>
+                                  <td>Unit Price</td>
+                                  <td>$</td>
+                                  <td>Total</td>
+                                </tr>
+                                  <t t-set="i" t-value="0" />
+                                <t t-foreach="o.order_line" t-as="p">
+                                    <t t-set="i" t-value="i+10"/>
+                                    <tr>
+                                      <td><t t-esc="i" /></td>
+                                      <td><t t-esc="p.product_id.product_tmpl_id.default_code" /></td>
+                                      <td>-</td>
+                                      <td><t t-esc="p.product_id.name" /></td>
+                                      <td><t t-esc="p.product_uom_qty" /></td>
+                                      <td>$</td>
+                                      <td><t t-esc="p.price_unit" /></td>
+                                      <td>$</td>
+                                      <td><t t-esc="p.price_subtotal" /></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="7">
+
+                                    </td>
+                                    <td>
+                                        Subtotal
+                                    </td>
+                                    <td>
+                                        <t t-esc="o.total_sale_order()" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <t t-raw="o.note" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <div class="row" style="margin-left: 5px">
+                                            Shipping : <t t-esc="o.incoterm.name" />
+                                        </div>
+                                    </td>
+                                </tr>
+
+                              </tbody>
+                            </table>
+                        </div>
+                        <div class="row mt-1">
+                            We thank you for your interest and are looking forward to receive this order.
+                        </div>
+                        <div class="row mt-1">
+                            With kind regards,
+                        </div>
+                        <div class="row mt-1">
+                            Christiaan Romme
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+<!--    <template id="external_layout_footer" inherit_id="account.external_layout_footer">-->
+<!--        &lt;!&ndash; make here your template modifications as usual &ndash;&gt;-->
+<!--    </template>-->
+</odoo>

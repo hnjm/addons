@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="FieldBinaryFileUploader.attachment_preview" >
+        <t t-jquery="div.caption:eq(1)" t-operation="append">
+            <t t-name="FieldBinaryFileUploader.button_preview">
+                <i t-att-data-id="file.id" t-att-data-title="'Download ' + file.name" class="attachment_preview text-secondary pe-auto fa fa-eye" role="img" aria-label="Preview" title="Preview" style='cursor: zoom-in;'/>
+            </t>
+            
+        </t>
+    </t>
+</templates>

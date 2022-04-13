@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  
+    <record id="mrp_routing_workcenter_form_view_add_attachment" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.inherit.view.form</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+           <xpath expr="//field[@name='worksheet']" position="before">
+                <label for="worksheet_attachment_ids" string="PDF" attrs="{'invisible':  [('worksheet_type', '!=', 'pdf')]}"/>
+               <field  name="worksheet_attachment_ids" nolabel="1" options="{'accepted_file_extensions': 'application/pdf'}"  widget='many2many_binary' help="Upload your PDF file."  attrs="{'invisible':  [('worksheet_type', '!=', 'pdf')], 'required':  [('worksheet_type', '=', 'pdf')]}"/>
+           </xpath>
+           
+           <xpath expr="//field[@name='worksheet']" position="attributes">
+                <attribute name="attrs">{}</attribute>
+                <attribute name="invisible">1</attribute>
+                <attribute name="required">0</attribute>
+           </xpath>
+           
+        </field>
+    </record>
+</odoo>

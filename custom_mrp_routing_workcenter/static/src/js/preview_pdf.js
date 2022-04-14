@@ -10,19 +10,19 @@ var FieldMany2ManyBinaryMultiFiles = relational_fields.FieldMany2ManyBinaryMulti
 
 var FieldMany2ManyBinaryMultiFilesPreview = FieldMany2ManyBinaryMultiFiles.include({
     events: _.extend({
-        'click .attachment_preview': '_on_PreviewAttachment',
+        // 'click .attachment_preview': '_on_PreviewAttachment',
         'click .ks_binary_file_preview': "ks_onAttachmentView",
     }, FieldMany2ManyBinaryMultiFiles.prototype.events),
 
-    _on_PreviewAttachment: function (ev) {
-        var self = this;
-        console.log(ev.currentTarget)
-        var fileID = $(ev.currentTarget).data('id');
-        var title = $(ev.currentTarget).data('title');
-        var url='/web/content/' + fileID
-        var wnd=window.open(url, '_blank', 'fullscreen=yes','location=no')
-        setTimeout(function(){ wnd.document.title = title; }, 1000);
-    },
+    // _on_PreviewAttachment: function (ev) {
+    //     var self = this;
+    //     console.log(ev.currentTarget)
+    //     var fileID = $(ev.currentTarget).data('id');
+    //     var title = $(ev.currentTarget).data('title');
+    //     var url='/web/content/' + fileID
+    //     var wnd=window.open(url, '_blank', 'fullscreen=yes','location=no')
+    //     setTimeout(function(){ wnd.document.title = title; }, 1000);
+    // },
     ks_onAttachmentView: function(ev) {
             var self = this;
             try {

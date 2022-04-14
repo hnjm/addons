@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates id="template" xml:space="preserve">
     <t t-extend="FieldBinaryFileUploader.attachment_preview" >
-        <t t-jquery="div.caption:eq(1)" t-operation="append">
+        <t t-jquery="div.o_image_box" t-operation="replace">
             <t t-name="FieldBinaryFileUploader.button_preview">
-                <i t-att-data-id="file.id" t-att-data-title="'Download ' + file.name" class="attachment_preview text-secondary pe-auto fa fa-eye" role="img" aria-label="Preview" title="Preview" style='cursor: zoom-in;'/>
+                <button t-att-data-id="file.id" type="button" class="ks_binary_file_preview btn btn-secondary fa fa-file-pdf-o" style="padding: 0px 4px; color: red; font-size: 40px" title="Preview" aria-label="Preview"/>
             </t>
             
         </t>

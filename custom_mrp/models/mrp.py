@@ -7,6 +7,9 @@ from collections import defaultdict
 class MRP(models.Model):
     _inherit = 'mrp.production'
 
+    sequence_mrp = fields.Integer('stt')
+    mrp_ref = fields.Char('Ref')
+
     def action_confirm(self, is_outsource=False):
         self._check_company()
         for production in self:

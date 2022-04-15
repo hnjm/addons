@@ -29,7 +29,8 @@ from odoo.exceptions import Warning
 import ctypes
 from PIL import Image
 from io import BytesIO
-
+import requests
+from binascii import a2b_base64
 
 class ProductImageImportWizard(models.TransientModel):
     _name = 'import.product_image'
@@ -38,55 +39,37 @@ class ProductImageImportWizard(models.TransientModel):
     pdt_operation = fields.Selection([('1', 'Product Creation'), ('2', 'Product Updation')], string="Product Operation")
     file = fields.Binary('File to import', required=True)
 
+    def load_image_from_url(self, url):
+        data = base64.b64encode(requests.get(url).content)
+        return data
+
     def import_file(self):
-        file = StringIO(base64.decodestring(self.file).decode('utf-8'))
-        reader = csv.reader(file, delimiter=',')
+        file =  a2b_base64(self.file).decode('latin-1').encode("utf-8")
+        file_string = file.decode("utf-8")
+        file_string = file_string.split('\n')
+        reader = csv.reader(file_string, delimiter=',')
         csv.field_size_limit(int(ctypes.c_ulong(-1).value // 2))
         skip_header = True
         for row in reader:
             if skip_header:
                 skip_header = False
                 continue
-            product = row[0]
-            image_path = row[1]
-            if "http://" in image_path or "https://" in image_path:
-                try:
-                    link = urllib.request.urlopen(image_path).read()
-                    image_base64 = base64.encodestring(link)
-                    if self.product_model == '1':
-                        product_obj = self.env['product.template']
-                    else:
-                        product_obj = self.env['product.product']
-                    product_id = product_obj.search([('name', '=', product)])
-
-                    vals = {
-                        'image_1920': image_base64,
-                        'name': product,
-                    }
-                    if self.pdt_operation == '1' and not product_id:
-                        product_obj.create(vals)
-                    elif self.pdt_operation == '1' and product_id:
-                        product_id.write(vals)
-                    elif self.pdt_operation == '2' and product_id:
-                        product_id.write(vals)
-                    elif not product_id and self.pdt_operation == '2':
-                        raise Warning("Could not find the product '%s'" % product)
-                except Exception as e:
-                    # raise Warning("Please provide correct URL for product '%s' or check your image size.!" % product)
-                    print(e)
-            else:
-                try:
-                    with open(image_path, 'rb') as image:
-                        a = base64.b64encode(image.read())
-                        # im = Image.open(BytesIO(base64.b64decode(a)))
-                        # image_base64 = image.read().encode("base64")
+            if len(row)>0:
+                product = row[0]
+                image_path = row[1]
+                if "http://" in image_path or "https://" in image_path:
+                    try:
+                        # link = urllib.request.urlopen(image_path).read()
+                        # image_base64 = base64.encodestring(link)
+                        image_base64 = base64.b64encode(requests.get(image_path).content)
                         if self.product_model == '1':
                             product_obj = self.env['product.template']
                         else:
                             product_obj = self.env['product.product']
                         product_id = product_obj.search([('name', '=', product)])
+
                         vals = {
-                            'image_1920': a,
+                            'image_1920': image_base64,
                             'name': product,
                         }
                         if self.pdt_operation == '1' and not product_id:
@@ -97,7 +80,33 @@ class ProductImageImportWizard(models.TransientModel):
                             product_id.write(vals)
                         elif not product_id and self.pdt_operation == '2':
                             raise Warning("Could not find the product '%s'" % product)
-                except IOError:
-                    raise Warning("Could not find the image '%s' - please make sure it is accessible to this script" %
-                                  product)
+                    except Exception as e:
+                        # raise Warning("Please provide correct URL for product '%s' or check your image size.!" % product)
+                        print(e)
+                else:
+                    try:
+                        with open(image_path, 'rb') as image:
+                            a = base64.b64encode(image.read())
+                            # im = Image.open(BytesIO(base64.b64decode(a)))
+                            # image_base64 = image.read().encode("base64")
+                            if self.product_model == '1':
+                                product_obj = self.env['product.template']
+                            else:
+                                product_obj = self.env['product.product']
+                            product_id = product_obj.search([('name', '=', product)])
+                            vals = {
+                                'image_1920': a,
+                                'name': product,
+                            }
+                            if self.pdt_operation == '1' and not product_id:
+                                product_obj.create(vals)
+                            elif self.pdt_operation == '1' and product_id:
+                                product_id.write(vals)
+                            elif self.pdt_operation == '2' and product_id:
+                                product_id.write(vals)
+                            elif not product_id and self.pdt_operation == '2':
+                                raise Warning("Could not find the product '%s'" % product)
+                    except IOError:
+                        raise Warning("Could not find the image '%s' - please make sure it is accessible to this script" %
+                                    product)
 

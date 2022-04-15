@@ -44,7 +44,12 @@ class SaleOrder(models.Model):
 
     def show_mrp(self):
         model = self.env['mrp.production']
-        mrp = model.search([('origin', '=', self.name)])
+        procurement_groups = self.env['procurement.group'].search(
+            [('sale_id', 'in', self.ids)])
+        mrp_production_ids = set(
+            procurement_groups.stock_move_ids.created_production_id.ids) | \
+                             set(procurement_groups.mrp_production_ids.ids)
+        mrp = self.env['mrp.production'].browse(mrp_production_ids)
         res = []
         for line in mrp:
             child_mrp = model.search([('origin', '=', line.name)])

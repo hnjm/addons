@@ -39,15 +39,16 @@ class ManufacturingOrder(models.Model):
                     should_consume_qty += data.should_consume_qty
                     reserved_availability += data.reserved_availability 
                     quantity_done += data.quantity_done 
-                    product_uom_qty+=data.product_uom_qty    
-                avail_qty_uom = float_round(reserved_availability,precision_digits=precision) if self.state!='done' else  float_round(reserved_availability - quantity_done + product_uom_qty,precision_digits=precision)
-                should_consume_qty_uom=float_round(should_consume_qty,precision_digits=precision) if should_consume_qty>0 else 0
-                miss_qty=float_round(avail_qty_uom - should_consume_qty_uom,precision_digits=precision) 
+                    product_uom_qty+=data.product_uom_qty   
+                
+                should_consume_qty_uom=float_round(should_consume_qty,precision_digits=precision)
+                avail_qty_uom = float_round(reserved_availability,precision_digits=precision) if self.state!='done' else float_round(product_uom_qty,precision_digits=precision)
+                miss_qty=float_round(should_consume_qty_uom - avail_qty_uom,precision_digits=precision) 
                 if avail_qty_uom<0:
                     miss_pack_msg.append(_(
                         '%s (%s) : Qty needed use (%s) - Available Qty (%s) => Missing Qty (%s) . \n') % (
                                     bom_line_id.product_id.display_name, bom_line_id.product_id.uom_id.name, abs(should_consume_qty_uom), abs(avail_qty_uom), abs(avail_qty_uom)))
-                elif float(abs(should_consume_qty_uom) - abs(avail_qty_uom)) > 0:
+                elif float(should_consume_qty_uom - avail_qty_uom) > 0:
                     miss_pack_msg.append(_(
                         '%s (%s) : Qty needed use (%s) - Available Qty (%s) => Missing Qty (%s) . \n') % (
                                     bom_line_id.product_id.display_name, bom_line_id.product_id.uom_id.name, abs(should_consume_qty_uom), abs(avail_qty_uom), abs(miss_qty)))

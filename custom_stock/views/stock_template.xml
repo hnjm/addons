@@ -1,6 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="stock_report_picking_template_inherit" inherit_id="stock.report_picking">
+<!--    <template id="stock_report_picking_template_inherit" inherit_id="stock.report_picking">-->
+<!--        <xpath expr="//div[@name='div_incoming_address']" position="replace">-->
+<!--            <div class="col-6" name="div_incoming_address">-->
+<!--                <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">-->
+<!--                    <span><strong>Vendor Address:</strong></span>-->
+<!--                    <div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>-->
+<!--                </div>-->
+<!--&lt;!&ndash;                <div t-if="o.picking_type_id.code=='internal' and o.location_dest_id.warehouse_id and o.location_dest_id.warehouse_id == o.picking_type_id.warehouse_id">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <span><strong>Warehouse Address:</strong></span>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                <div t-if="o.picking_type_id.code=='outgoing' and o.partner_id">-->
+<!--                    <span><strong>Customer Address:</strong></span>-->
+<!--                    <div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>-->
+<!--                </div>-->
+<!--                <div t-if="o.picking_type_id.code=='internal' and o.location_id.warehouse_id and o.location_dest_id.warehouse_id and o.location_dest_id.warehouse_id != o.location_id.warehouse_id">-->
+<!--                    <span><strong>To Address:</strong></span>-->
+<!--                    <div t-field="o.location_dest_id.warehouse_id.partner_id"-->
+<!--                       t-options='{"widget": "contact", "fields": ["address", "name", "phone", "mobile"], "no_marker": True, "phone_icons": True}'/>-->
+<!--&lt;!&ndash;                    <p t-if="o.sudo().location_dest_id.warehouse_id.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="o.sudo().location_dest_id.warehouse_id.partner_id.vat"/></p>&ndash;&gt;-->
+<!--                </div>-->
+<!--                <div name="partner_header" t-if="o.picking_type_id.code=='internal' and o.location_id.warehouse_id and o.location_dest_id.warehouse_id and o.location_dest_id.warehouse_id == o.location_id.warehouse_id">-->
+<!--                    <span><strong>Warehouse Address:</strong></span>-->
+<!--                    <div t-field="o.picking_type_id.warehouse_id.partner_id"-->
+<!--                       t-options='{"widget": "contact", "fields": ["address", "name", "phone", "mobile"], "no_marker": True, "phone_icons": True}'/>-->
+<!--&lt;!&ndash;                    <p t-if="o.sudo().picking_type_id.warehouse_id.partner_id.vat"><t t-esc="o.company_id.country_id.vat_label or 'Tax ID'"/>: <span t-field="o.sudo().picking_type_id.warehouse_id.partner_id.vat"/></p>&ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </xpath>-->
+
+<!--        <xpath expr="//div[@name='div_outgoing_address']" position="replace">-->
+<!--            <div class="col-6" name="div_outgoing_address">-->
+<!--                <div t-if="o.move_ids_without_package and o.move_ids_without_package[0].partner_id and o.move_ids_without_package[0].partner_id.id != o.partner_id.id">-->
+<!--                    <span><strong>Delivery Address:</strong></span>-->
+<!--                    <div t-field="o.move_ids_without_package[0].partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>-->
+<!--                </div>-->
+<!--                <div t-if="o.picking_type_id.code != 'internal'">-->
+<!--                    <span><strong>Warehouse Address:</strong></span>-->
+<!--                    <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>-->
+<!--                </div>-->
+
+<!--                <div t-if="o.picking_type_id.code == 'internal' and o.location_id.warehouse_id and o.location_dest_id.warehouse_id and o.location_dest_id.warehouse_id != o.location_id.warehouse_id">-->
+<!--                    <span><strong>From Address:</strong></span>-->
+<!--                    <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--        </xpath>-->
+<!--    </template>-->
+
+
+    <template id="stock_report_delivery_document_inherit" inherit_id="stock.report_delivery_document">
         <xpath expr="//div[@name='div_incoming_address']" position="replace">
             <div class="col-6" name="div_incoming_address">
                 <div t-if="o.picking_type_id.code=='incoming' and o.partner_id">
@@ -43,7 +94,7 @@
 
                 <div t-if="o.picking_type_id.code == 'internal' and o.location_id.warehouse_id and o.location_dest_id.warehouse_id and o.location_dest_id.warehouse_id != o.location_id.warehouse_id">
                     <span><strong>From Address:</strong></span>
-                    <div t-field="o.picking_type_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
+                    <div t-field="o.location_id.warehouse_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;mobile&quot;], &quot;no_marker&quot;: True, &quot;phone_icons&quot;: True}"/>
                 </div>
             </div>
 

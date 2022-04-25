@@ -49,6 +49,8 @@ class SaleOrder(models.Model):
         return res
 
     def show_mrp(self):
+        seen = set()
+        result = []
         model = self.env['mrp.production']
         procurement_groups = self.env['procurement.group'].search([('sale_id', 'in', self.ids)])
         mrp_production_ids = set(procurement_groups.stock_move_ids.created_production_id.ids) |\
@@ -59,19 +61,22 @@ class SaleOrder(models.Model):
             child_mrp = model.search([('origin', '=', line.name)])
             if child_mrp:
                 res += self.loop_child_mrp(child_mrp, line)
-        for j, stt in enumerate(res):
+        for dic in res:
+            key = (dic['child_id'])
+            if key in seen:
+                continue
+            result.append(dic)
+            seen.add(key)
+        for j, stt in enumerate(result):
             check = model.search([('id', '=', int(stt['child_id']))])
             check.sequence_mrp = j
             convert_name = check.name.split('/')
             res_name = convert_name[0] + '/' + convert_name[1]
-            check.mrp_ref = '{}.{}'.format(res_name + '/' + str(stt['so']), str(j+1).zfill(3))
+            check.mrp_ref = '{}.{}'.format(res_name + '/' + str(stt['so'])[1:], str(j+1).zfill(3))
         return res
 
     def action_view_mrp_production(self):
         self.ensure_one()
-        # procurement_groups = self.env['procurement.group'].search([('sale_id', 'in', self.ids)])
-        # mrp_production_ids = set(procurement_groups.stock_move_ids.created_production_id.ids) |\
-        #     set(procurement_groups.mrp_production_ids.ids)
         mrp_production_ids = self.show_mrp()
         arr = []
         for i in mrp_production_ids:

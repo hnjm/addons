@@ -65,6 +65,7 @@
                     <field name="bom_id" readonly="1" optional="hide"/>
                     <field name="activity_ids" string="Next Activity" widget="list_activity" optional="show" nolabel="1"/>
                     <field name="origin" optional="show"/>
+                    <field name="sale_id" optional="show"/>
                     <field name="user_id" optional="hide" widget="many2one_avatar_user"/>
                     <field name="components_availability_state" invisible="1" options="{&quot;lazy&quot;: true}"/>
                     <field name="components_availability" options="{&quot;lazy&quot;: true}" attrs="{'invisible': [('state', 'not in', ['confirmed', 'progress'])]}" optional="show" decoration-success="reservation_state == 'assigned' or components_availability_state == 'available'" decoration-warning="reservation_state != 'assigned' and components_availability_state in ('expected', 'available')" decoration-danger="reservation_state != 'assigned' and components_availability_state == 'late'"/>

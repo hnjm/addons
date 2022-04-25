@@ -8,7 +8,13 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="file"/>
+                    <group>
+                        <field name="product_model"  required="1"/>
+                        <field name="file"/>
+                    </group>
+                    <group>
+                        <field name="pdt_operation" required="1"/>
+                    </group>
                 </group>
                 <footer>
                     <button name="button_import" string="Import Image" type="object" class="btn-primary"/>

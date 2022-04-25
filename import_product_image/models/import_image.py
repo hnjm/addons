@@ -25,13 +25,14 @@ import base64
 from io import StringIO
 import sys
 from odoo import models, fields, api
-from odoo.exceptions import Warning
+import os
 import ctypes
 from PIL import Image
 from io import BytesIO
 import requests
 from binascii import a2b_base64
-
+from odoo.exceptions import UserError, ValidationError
+from odoo.tools import frozendict, image_to_base64, hex_to_rgb
 class ProductImageImportWizard(models.TransientModel):
     _name = 'import.product_image'
 
@@ -39,9 +40,11 @@ class ProductImageImportWizard(models.TransientModel):
     pdt_operation = fields.Selection([('1', 'Product Creation'), ('2', 'Product Updation')], string="Product Operation")
     file = fields.Binary('File to import', required=True)
 
-    def load_image_from_url(self, url):
-        data = base64.b64encode(requests.get(url).content)
-        return data
+    def loadImages(self,path):
+        # return array of images
+
+        img = Image.open(path)
+        return img
 
     def import_file(self):
         file =  a2b_base64(self.file).decode('latin-1').encode("utf-8")
@@ -79,14 +82,14 @@ class ProductImageImportWizard(models.TransientModel):
                         elif self.pdt_operation == '2' and product_id:
                             product_id.write(vals)
                         elif not product_id and self.pdt_operation == '2':
-                            raise Warning("Could not find the product '%s'" % product)
+                            raise UserError("Could not find the product '%s'" % product)
                     except Exception as e:
-                        # raise Warning("Please provide correct URL for product '%s' or check your image size.!" % product)
+                        # raise UserError("Please provide correct URL for product '%s' or check your image size.!" % product)
                         print(e)
                 else:
                     try:
-                        with open(image_path, 'rb') as image:
-                            a = base64.b64encode(image.read())
+                        with self.loadImages(image_path) as image:
+                            # a = base64.b64encode(image.read())
                             # im = Image.open(BytesIO(base64.b64decode(a)))
                             # image_base64 = image.read().encode("base64")
                             if self.product_model == '1':
@@ -95,7 +98,7 @@ class ProductImageImportWizard(models.TransientModel):
                                 product_obj = self.env['product.product']
                             product_id = product_obj.search([('name', '=', product)])
                             vals = {
-                                'image_1920': a,
+                                'image_1920':image_to_base64(image.convert("RGB"),image.format),
                                 'name': product,
                             }
                             if self.pdt_operation == '1' and not product_id:
@@ -105,8 +108,8 @@ class ProductImageImportWizard(models.TransientModel):
                             elif self.pdt_operation == '2' and product_id:
                                 product_id.write(vals)
                             elif not product_id and self.pdt_operation == '2':
-                                raise Warning("Could not find the product '%s'" % product)
+                                raise UserError("Could not find the product '%s'" % product)
                     except IOError:
-                        raise Warning("Could not find the image '%s' - please make sure it is accessible to this script" %
+                        raise UserError("Could not find the image '%s' - please make sure it is accessible to this script" %
                                     product)
 

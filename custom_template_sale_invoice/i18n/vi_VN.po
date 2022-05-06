@@ -28,12 +28,12 @@ msgstr "<strong>Thu Ngân</strong>"
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
 msgid "<strong>Created by:</strong>"
-msgstr "NVTH"
+msgstr "NVTH:"
 
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
 msgid "<strong>Customer:</strong>"
-msgstr "KH"
+msgstr "KH:"
 
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos

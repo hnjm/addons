@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <record id="paperformat_inventory_sale_pos" model="report.paperformat">
+        <field name="name">Custom Paperformat for Sale Post</field>
+        <field name="format">custom</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation"></field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"></field>
+        <field name="dpi">90</field>
+    </record>
+    <record id="account_invoices_sale_pos" model="ir.actions.report">
+        <field name="name">Invoices Sale Pos</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_template_sale_invoice.report_invoice_sale_pos</field>
+        <field name="report_file">custom_template_sale_invoice.report_invoice_sale_pos</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="paperformat_inventory_sale_pos"/>
+        <field name="groups_id" eval="[(4, ref('sales_team.group_sale_salesman')),(4, ref('sales_team.group_sale_manager')),(4, ref('account.group_account_invoice'))]"/>
+    </record>
+</odoo>

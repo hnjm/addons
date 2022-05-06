@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add functionality of total discount in saleorder form  --> 
+    <record id="view_order_form_inherited" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref ="sale.view_order_form"/>	
+        <field name="arch" type="xml">
+            <xpath expr ="//field[@name='tax_totals_json']" position="before">
+                <label for="discount_percent_total"  invisible='1' />
+                <div class="o_row"  invisible='1'><field name="discount_percent_total" readonly='1' force_save='1'/>%</div>
+                <field name ="discount_total"  invisible='1'/>	
+                <label for="tax_percent_total"  invisible='1'/>
+                <div class="o_row"  invisible='1'><field name="tax_percent_total" readonly='1' force_save='1'/>%</div>
+                <field name ="amount_tax"  invisible='1'/>	
+            </xpath>
+        </field>   
+    </record>
+</odoo>

@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* custom_template_sale_invoice
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 15.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-06 22:38+0000\n"
+"PO-Revision-Date: 2022-05-06 22:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: custom_template_sale_invoice
+#: model:ir.actions.report,print_report_name:custom_template_sale_invoice.account_invoices_sale_pos
+msgid "(object._get_report_base_filename())"
+msgstr ""
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Cashier</strong>"
+msgstr "<strong>Thu Ngân</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Created by:</strong>"
+msgstr "NVTH"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Customer:</strong>"
+msgstr "KH"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Discount</strong>"
+msgstr "<strong>Giảm giá dịch vụ</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Print Date:</strong>"
+msgstr "<strong>Ngày in:</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Provisional</strong>"
+msgstr "<strong>Tạm tính</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>SO Code:</strong>"
+msgstr "<strong>Mã ĐH:</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>Signature</strong>"
+msgstr "<strong>Chữ ký KH</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "<strong>VAT</strong>"
+msgstr "<strong>VAT</strong>"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "Amount"
+msgstr "T.Tiền"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "BILL OF SALE"
+msgstr "HÓA ĐƠN BÁN HÀNG"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "Disc"
+msgstr "Giảm giá"
+
+#. module: custom_template_sale_invoice
+#: model:ir.actions.report,name:custom_template_sale_invoice.account_invoices_sale_pos
+msgid "Invoices Sale Pos"
+msgstr ""
+
+#. module: custom_template_sale_invoice
+#: model:ir.model,name:custom_template_sale_invoice.model_account_move
+msgid "Journal Entry"
+msgstr ""
+
+#. module: custom_template_sale_invoice
+#: code:addons/custom_template_sale_invoice/models/account_move.py:0
+#, python-format
+msgid "Only invoices could be printed."
+msgstr ""
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "Qty"
+msgstr "SL"
+
+#. module: custom_template_sale_invoice
+#: model:ir.model,name:custom_template_sale_invoice.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "S/P"
+msgstr "DV/SP"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "SUM"
+msgstr "Tổng cộng"
+
+#. module: custom_template_sale_invoice
+#: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
+msgid "See you later!"
+msgstr "Hẹn gặp lại quý khách"

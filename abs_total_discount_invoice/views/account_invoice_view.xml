@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add functionality of total discount in invoice form  --> 
+    <record id="view_move_form_inh" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+	<field name="inherit_id" ref ="account.view_move_form"/>	
+        <field name="arch" type="xml">
+            <xpath expr ="//field[@name='tax_totals_json']" position="before">
+                <label for="discount_percent_total" invisible='1' />
+                <div class="o_row"  invisible='1'><field name="discount_percent_total" readonly='1' force_save='1'/>%</div>
+                <field name ="discount_total"  invisible='1'/>
+                <label for="tax_percent_total"  invisible='1' />
+                <div class="o_row"  invisible='1'><field name="tax_percent_total" readonly='1' force_save='1'/>%</div>
+                <field name ="amount_tax"  invisible='1'/>				
+            </xpath>
+        </field> 
+    </record>
+</odoo>

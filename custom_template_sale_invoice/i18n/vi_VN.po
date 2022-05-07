@@ -78,7 +78,7 @@ msgstr "HÓA ĐƠN BÁN HÀNG"
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
 msgid "Disc"
-msgstr "Giảm giá"
+msgstr "G.giá"
 
 #. module: custom_template_sale_invoice
 #: model:ir.actions.report,name:custom_template_sale_invoice.account_invoices_sale_pos

@@ -85,7 +85,7 @@
                                                 <span t-field="line.quantity"/>
                                                 <!-- <span t-field="line.product_uom_id"  groups="uom.group_uom"/> -->
                                             </td>
-                                            <td t-if="display_discount" t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
+                                            <td t-attf-class="text-right {{ 'd-none d-md-table-cell' if report_type == 'html' else '' }}">
                                                 <!-- <span class="text-nowrap" t-field="line.discount" /> -->
                                                 <span t-esc="discount_price" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
                                             </td>
@@ -150,7 +150,7 @@
                         <span t-field="o.fiscal_position_id.note"/>
                     </p>
                     <div id="infor_cashier_custom_sign" class="row mt32 mb-7">
-                        <div class="col-auto mb-2" t-if="o.invoice_date" name="invoice_date">
+                        <div class="col-auto mb-2" name="invoice_date">
                             <strong>Signature</strong>
                             
                         </div>

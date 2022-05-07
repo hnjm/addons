@@ -122,12 +122,12 @@
                                         </td>
                                     </tr>
                                     <tr >
-                                        <td><h5>SUM</h5></td>
+                                        <td><h6 class='font-weight-bold'>SUM</h6></td>
                                         <td class="text-right"></td>
                                         <td class="text-right">
                                         </td>
                                         <td class="text-right">
-                                            <h5><span t-field="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></h5>
+                                            <h6><span class='font-weight-bold'  t-field="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></h6>
                                         </td>
                                     </tr>
                             </tbody>

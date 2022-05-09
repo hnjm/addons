@@ -27,8 +27,8 @@ msgstr "<strong>Thu Ngân</strong>"
 
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos
-msgid "<strong>Created by:</strong>"
-msgstr "NVTH:"
+msgid "<strong>Cashier:</strong>"
+msgstr "NVTN:"
 
 #. module: custom_template_sale_invoice
 #: model_terms:ir.ui.view,arch_db:custom_template_sale_invoice.report_invoice_document_sale_pos

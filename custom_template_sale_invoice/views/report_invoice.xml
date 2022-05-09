@@ -16,8 +16,11 @@
                     
                     <div class='text-center '>
                         <h5 class='text-uppercase' t-field="o.company_id.partner_id"></h5>
-                        <p t-field="o.company_id.partner_id"
-                         t-options='{"widget": "contact", "fields": ["address","phone"], "no_marker": true}'/>
+                        <!-- <p t-field="o.company_id.partner_id"
+                         t-options='{"widget": "contact", "fields": ["address","phone"], "no_marker": true}'/> -->
+                        <span t-if="o.company_id.street" t-field="o.company_id.street"/>,
+                        <span t-field="o.company_id.street2" />,<span t-field="o.company_id.city"/>, <span t-field="o.company_id.state_id"/>
+                        <p t-field="o.company_id.phone"/>
                     </div>
                     <h5 class='text-center text-body mt-4'>
                         BILL OF SALE
@@ -45,7 +48,7 @@
                     </div>
                     <div id="create_info"  class="row mb-4">
                         <div class="col-auto col-3 mb-2">
-                            <strong>Created by:</strong>
+                            <strong>Cashier:</strong>
                             <span t-esc="o.invoice_user_id.name"/>
                         </div>
                     </div>
@@ -122,12 +125,12 @@
                                         </td>
                                     </tr>
                                     <tr >
-                                        <td><h6 class='font-weight-bold'>SUM</h6></td>
+                                        <td><h5 class='font-weight-bold'>SUM</h5></td>
                                         <td class="text-right"></td>
                                         <td class="text-right">
                                         </td>
                                         <td class="text-right">
-                                            <h6><span class='font-weight-bold'  t-field="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></h6>
+                                            <h5><span class='font-weight-bold'  t-field="o.amount_total" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></h5>
                                         </td>
                                     </tr>
                             </tbody>
@@ -146,13 +149,9 @@
                         <span t-field="o.fiscal_position_id.note"/>
                     </p>
                     <div id="infor_cashier_custom_sign" class="row mt32 mb-7">
-                        <div class="col-auto mb-2" name="invoice_date">
-                            <strong>Signature</strong>
-                            
-                        </div>
                         <div class="col-auto mb-2 text-right">
                             <strong>Cashier</strong>
-                            <p t-field="o.env.user.name"/>
+                            <p t-field="o.invoice_user_id.name"/>
                         </div>
                     </div>
 

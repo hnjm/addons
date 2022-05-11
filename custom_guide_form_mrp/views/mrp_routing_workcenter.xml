@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="mrp_routing_workcenter_form_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.inherit.view.form</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            
+            <xpath expr="//page[@name='worksheet']" position="after">
+                <page string="Notes" name="worksheet">
+                    <group>
+                        <field name="notes" widget="html" nolabel = "1"/>
+                    </group>
+                </page>
+            </xpath>
+            
+            
+        </field>
+    </record>
+</odoo>

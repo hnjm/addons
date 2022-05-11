@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   
+    <record id="mrp_production_workorder_tree_editable_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.workorder.inherit.view.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_tree_editable_view"/>
+        <field name="arch" type="xml">
+            
+            
+            <xpath expr="//button[@name='action_open_wizard']" position="after">
+                <button class="fa fa-print" name="%(custom_guide_form_mrp.form_guide_form_operation)d" type="action"/>
+            </xpath>
+            
+            
+            
+        </field>
+    </record>
+</odoo>

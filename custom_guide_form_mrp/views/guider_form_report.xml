@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="form_guide_form_operation" model="ir.actions.report">
+        <field name="name">Guide Form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">custom_guide_form_mrp.report_form_guide_form_operation</field>
+        <field name="report_file">custom_guide_form_mrp.report_form_guide_form_operation</field>
+        <field name="print_report_name">(object._get_report_base_filename())</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_workorder"/>
+        <field name="binding_type">report</field>
+    </record>
+    <data>
+    
+        <template id="report_document_guider_form">
+            <t t-call="web.internal_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-3">
+                            <h2 t-if="o.production_id.sale_id.name"><span t-field="o.production_id.sale_id.name"/></h2>
+                        </div>
+                        <div class="col-2">
+                            <h2 t-if="o.operation_id.sequence"><span t-field="o.operation_id.sequence"/></h2>
+                        </div>
+                        <div class="col-4">
+                            <span class="text-right">
+                                <div t-field="o.name" t-options="{'widget': 'barcode', 'width': 600, 'height': 100, 'img_style': 'width:350px;height:60px'}"/>
+                            </span>
+                        </div>
+                        <div class="col-3">
+                            <span class="text-right" t-field="o.user_id.name"></span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <br/>
+                    <div class="row mt64 mb32">
+                        <div class="col-4" >
+                            <strong>Order no:</strong>
+                            <span t-field="o.production_id.sale_id.name"/>
+                        </div>
+                        <div class="col-4" >
+                            
+                        </div>
+                        <div class="col-4">
+                            <strong>Quantity:</strong>
+                            <span t-field="o.qty_production"/>
+                        </div>
+                    </div>
+                    <div class="row mt32 mb32">
+                        <div class="col-4" >
+                            <strong>MO:</strong>
+                            <span t-field="o.production_id.name"/>
+                        </div>
+                    </div>
+                    <div class="row mt32 mb32">
+                        <div class="col-4" >
+                            <strong>Job order nr:</strong>
+                            <span t-field="o.operation_id.sequence"/>
+                        </div>
+                        <div class="col-4" >
+                            <span t-field="o.operation_id.name"/>
+                        </div>
+                        <div class="col-4">
+                            <strong>Product Code:</strong>
+                            <span t-field="o.product_id.default_code"/>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt32 mb32">
+                        <div class="col-4" >
+                            <strong>Reference:</strong>
+                            <span t-field="o.production_id.sale_id.client_order_ref"/>
+                        </div>
+                    </div>
+                    <div class="row mt32 mb32">
+                        <div class="col-4" >
+                            <strong>Debtor name:</strong>
+                            <span t-field="o.production_id.sale_id.partner_id.name"/>
+                        </div>
+                    </div>
+
+                    <!-- <hr t-if="o.move_raw_ids"/> -->
+                    <br/>
+
+                    <table class="table table-sm" t-if="o.move_raw_ids">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Code</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="o.move_raw_ids">
+                                <tr t-foreach="o.move_raw_ids" t-as="raw_line">
+                                    <td>
+                                        <span t-field="raw_line.product_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="raw_line.product_id.default_code"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="raw_line.product_id.description"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="raw_line.product_uom_qty"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="raw_line.product_uom.name"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                    <hr t-if="o.operation_id.notes"/>
+                    <br/>
+                    <div class="row mt32 mb32" t-if="o.operation_id.notes">
+                        <div class="col-12" >
+                            <strong>Notes:</strong>
+                            <span t-field="o.operation_id.notes"/>
+                        </div>
+                    </div>
+
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_form_guide_form_operation">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-if="o._get_name_report_document_guider_form() == 'custom_guide_form_mrp.report_document_guider_form'"
+                        t-call="custom_guide_form_mrp.report_document_guider_form" t-lang="lang"/>
+                    <div class="article"  t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')"></div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

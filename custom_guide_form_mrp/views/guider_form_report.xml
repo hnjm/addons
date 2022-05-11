@@ -83,20 +83,20 @@
                     <!-- <hr t-if="o.move_raw_ids"/> -->
                     <br/>
 
-                    <table class="table table-sm" t-if="o.move_raw_ids">
+                    <table class="table table-sm" t-if="o.production_id.move_raw_ids">
                         <thead>
                             <tr>
-                                <th>Product</th>
-                                <th>Code</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Unit</th>
+                                <th width="30%">Product</th>
+                                <th width="10%">Code</th>
+                                <th width="50%">Description</th>
+                                <th width="10%">Quantity</th>
+                                <th width="10%">Unit</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-if="o.move_raw_ids">
-                                <tr t-foreach="o.move_raw_ids" t-as="raw_line">
+                            <t t-if="o.production_id.move_raw_ids">
+                                <tr t-foreach="o.production_id.move_raw_ids" t-as="raw_line">
                                     <td>
                                         <span t-field="raw_line.product_id.name"/>
                                     </td>

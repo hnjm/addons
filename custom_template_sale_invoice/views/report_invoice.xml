@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+    
     <data>
     
         <template id="report_invoice_document_sale_pos">
@@ -152,6 +153,30 @@
                         <div class="col-auto mb-2 text-right">
                             <strong>Cashier</strong>
                             <p t-field="o.invoice_user_id.name"/>
+                        </div>
+                    </div>
+                    <div id="fanpage" class="row mt32">
+                        <div class="col-auto mb-2">
+                            <strong>Fanpage FB:</strong>
+                        </div>
+                        
+                    </div>
+                    <div id="fanpage" class="row mb-7">
+                        <p t-field="o.qr_code" t-options='{"widget": "image"}' style='width:40mm'/>
+                    </div>
+
+                    
+
+                    <div id="wifi" class="row mt32">
+                        <div class="col-auto mb-2">
+                            <strong>Wifi:</strong>
+                            <span t-field="o.wifi"/>
+                        </div>
+                    </div>
+                    <div id="passwifi" class="row mb-7">
+                        <div class="col-auto mb-2">
+                            <strong>Pass:</strong>
+                            <span t-field="o.passwifi"/>
                         </div>
                     </div>
 

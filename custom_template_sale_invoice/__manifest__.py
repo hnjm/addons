@@ -27,7 +27,7 @@
     'description': """ """,
     'version': '15.0.1.0',
     'depends': ['account','abs_total_discount_invoice','abs_total_discount_invoice'],
-    'data': ['views/account_report.xml','views/report_invoice.xml'],
+    'data': ['data/default_print.xml','views/account_move.xml','views/account_report.xml','views/report_invoice.xml'],
     'license': 'AGPL-3',    
     'installable': True,
     'application': True,

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <data>
-
+    <data noupdate="1">
          <record id="sequence_sale_order_seq" model="ir.sequence">
             <field name="name">Sale Order Sequence</field>
             <field name="code">sale.order.sequence.abc</field>
@@ -11,6 +10,8 @@
             <field eval="1" name="number_increment"/>
             <field eval="False" name="company_id"/>
         </record>
+    </data>
+    <data>
         <record id="view_quotation_tree_inherit_custom_sale_abc" model="ir.ui.view">
             <field name="name">view_quotation_tree_inherit_custom_sale_abc</field>
             <field name="model">sale.order</field>

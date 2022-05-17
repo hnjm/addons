@@ -27,7 +27,7 @@
     'description': """ """,
     'version': '15.0.1.0',
     'depends': ['mrp'],
-    'data': ['views/guider_form_report.xml','views/mrp_routing_workcenter.xml','views/mrp_workorder.xml'],
+    'data': ['views/guider_form_report.xml','views/mrp_routing_workcenter.xml','views/mrp_workorder.xml','views/mrp_report_views_main.xml'],
     'license': 'AGPL-3',    
     'installable': True,
     'application': True,

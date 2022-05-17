@@ -18,11 +18,23 @@ class SaleOrder(models.Model):
         for record in self:
             record.status_invoice = 'no_invoice'
             if record.state == 'sale' and record.invoice_ids and not record.invoice_ids.filtered(lambda x: x.payment_state not in ['paid']):
-                record.status_invoice = 'fully_paid'
+                total = record.amount_total
+                total_invoice = sum(i.amount_total for i in record.invoice_ids.filtered(lambda x: x.payment_state in ['paid']))
+                if 0 < total_invoice < total:
+                    record.status_invoice = 'partially_paid'
+                if total_invoice == total:
+                    record.status_invoice = 'fully_paid'
             if record.state == 'sale' and record.invoice_ids and not record.invoice_ids.filtered(lambda x: x.payment_state in ['paid', 'partial']):
                 record.status_invoice = 'not_paid'
             if record.state == 'sale' and record.invoice_ids and record.invoice_ids.filtered(lambda x: x.payment_state in ['partial']):
-                record.status_invoice = 'partially_paid'
+                total = record.amount_total
+                total_invoice = sum(
+                    i.amount_total for i in record.invoice_ids.filtered(lambda x: x.payment_state in ['partial', 'paid']))
+                if 0 < total_invoice < total:
+                    record.status_invoice = 'partially_paid'
+                if total_invoice == total:
+                    record.status_invoice = 'fully_paid'
+                # record.status_invoice = 'partially_paid'
 
     @api.model
     def create(self, vals):

@@ -52,6 +52,14 @@
                             <strong>MO:</strong>
                             <span t-field="o.production_id.name"/>
                         </div>
+                        <div class="col-4" >
+                            
+                        </div>
+                         <div class="col-4">
+                            <strong>Product Code:</strong>
+                            <span t-field="o.product_id.default_code"/>
+                        </div>
+                         
                     </div>
                     <div class="row mt32 mb32">
                         <div class="col-4" >
@@ -62,8 +70,7 @@
                             <span t-field="o.operation_id.name"/>
                         </div>
                         <div class="col-4">
-                            <strong>Product Code:</strong>
-                            <span t-field="o.product_id.default_code"/>
+                           
                         </div>
                     </div>
                     
@@ -118,10 +125,10 @@
                     </table>
                     <hr t-if="o.operation_id.notes"/>
                     <br/>
-                    <div class="row mt32 mb32" t-if="o.operation_id.notes">
+                    <div class="row mt32 mb32" t-if="o.operation_id.worksheet_type=='text'">
                         <div class="col-12" >
-                            <strong>Notes:</strong>
-                            <span t-field="o.operation_id.notes"/>
+                            <strong>Note:</strong>
+                            <span t-field="o.operation_id.note"/>
                         </div>
                     </div>
 

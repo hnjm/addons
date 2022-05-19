@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+     <data>
+        <record id="account.account_invoices" model="ir.actions.report">
+            <field name="binding_model_id" eval="False"/>
+        </record>
+        <record id="action_report_invoice_template" model="ir.actions.report">
+            <field name="name">Invoices</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">report_invoice_template.report_invoice_document_new</field>
+            <field name="report_file">report_invoice_template.report_invoice_document_new</field>
+            <field name="print_report_name">'Invoice'</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+    <template id="report_invoice_document_new">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <style>
+                             td {
+                                border-left: 1px solid white !important;
+                                border-right: 1px solid white !important;
+                                border-top: 1px solid #FF9900 !important;
+                                border-bottom: 1px solid #FF9900 !important;
+                            }
+                            .invoice_line{
+                                border-top: 1px solid white !important;
+                                border-bottom: 1px solid white !important;
+                            }
+                            .invoice_line_1{
+                                border-bottom: 1px solid #FF9900 !important;
+                            }
+                            .title-address{
+                                font-size: 18px;
+                                font-weight: bolder;
+                            }
+                        </style>
+                        <div class="row">
+                            <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)"/>
+                        </div>
+                        <div class="row">
+                            <div class="col-7">
+                            </div>
+                            <div class="col-5">
+                                <strong t-if="o.move_type == 'out_invoice'">Buyer:</strong>
+                                <div>
+                                    <span class="title-address"><t t-esc="o.partner_id.parent_id.name" /></span>
+                                </div>
+                                <div>
+                                    <span class="title-address"><t t-esc="o.partner_id.name" /></span>
+                                </div>
+                                <div>
+                                    <span class="title-address"><t t-esc="o.partner_id.street" /></span>
+                                </div>
+                                <div>
+                                    <span class="title-address"><t t-esc="o.partner_id.street2" />, <t t-esc="o.partner_id.city" />, <t t-esc="o.partner_id.state_id.name" />, <t t-esc="o.partner_id.zip" /></span>
+                                </div>
+                                <div>
+                                    <span class="title-address"><t t-esc="o.partner_id.country_id.name" /></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5">
+                            <table class="table table-bordered">
+                              <tbody>
+                                <tr>
+                                  <td colspan="9">
+                                    <div class="row">
+                                        <div class="col-7 text-center">
+                                            <span style="font-size: 22px; font-weight: bolder">Invoice</span>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Invoice number</span>
+                                                    <span style="margin-left: 2px;">:</span>
+                                                    <span class="span-header-three-1"><t t-esc="o.name" /></span>
+                                                </span>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="9">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            <div style="margin-left: 10px">
+                                                <span>Your Order nr.</span>
+                                                <span style="margin-left: 10px">:</span>
+                                                <span style="margin-left: 10px"><t t-esc="o.ref" /></span>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <span>Your phone nr.</span>
+                                                <span style="margin-left: 13px">:</span>
+                                                <span style="margin-left: 10px"> <t t-esc="o.partner_id.phone" /></span>
+                                            </div>
+                                            <div style="margin-left: 10px">
+                                                <span>Your e-mail</span>
+                                                <span style="margin-left: 35px">:</span>
+                                                <span style="margin-left: 10px"><t t-esc="o.partner_id.email" /></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Invoice date</span>
+                                                    <span style="margin-left: 24px;">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.invoice_date" /></span>
+                                                </span>
+                                              
+                                            </div>
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Incoterms</span>
+                                                    <span style="margin-left: 24px;">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.invoice_incoterm_id.name" /></span>
+                                                </span>
+                                              
+                                            </div>
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Terms of payment</span>
+                                                    <span style="margin-left: 24px;">:</span>
+                                                    <span class="span-header-three"><t t-esc="o.invoice_payment_term_id.name" /></span>
+                                                </span>
+                                              
+                                            </div>
+                                        </div>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="4">Description</td>
+                                  <td colspan="1">Quantity</td>
+                                  <td colspan="2">Unit Price (<span t-esc="o.currency_id.name"></span>)</td>
+                                  <td colspan="2" class="text-right">Total</td>
+                                </tr>
+                                <t t-set="total_sale_order" t-value="0"/>
+                                <t t-foreach="o.invoice_line_ids" t-as="p">
+                                    <t t-set="total_sale_order" t-value="total_sale_order + p.price_subtotal" /> 
+                                    <tr>
+                                      <td colspan="4" class="invoice_line"><t t-esc="p.name" /></td>
+                                      <td colspan="1" class="invoice_line"><t t-esc="p.quantity" /></td>
+                                      <td colspan="2" class="invoice_line"><t t-esc="'${:,.2f}'.format(p.price_unit)" /></td>
+                                      <td colspan="2" class="invoice_line text-right"><t t-esc="'${:,.2f}'.format(p.price_subtotal)" /></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td colspan="9">
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+
+                                    </td>
+                                    <td colspan="2">
+                                        Subtotal
+                                    </td>
+                                    <td colspan="2"  class="text-right">
+                                        <t t-esc="'${:,.2f}'.format(total_sale_order)" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="9">
+                                        <t t-raw="o.narration" />
+                                    </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="row mt-1">
+                            With kind regards,
+                        </div>
+                        <div class="row mt-5">
+                            <span>Christiaan Romme</span><br/>
+                            <span>General Director</span>
+                        </div>
+                        <!-- <div class="row mt-5">
+                             <t t-esc="o.user_id.name" />
+                        </div>
+                        <div class="row mt-1">
+                            <t t-esc="o.user_id.partner_id.function" />
+                        </div> -->
+                    </div>
+                    <div class="footer">
+                        <div style="border-top: 1px solid #FF9900; border-bottom: 1px solid #FF9900">
+                            <p class="text-center" style="font-size:11px">Indochina Park tower, 19th floor, 4 Nguyen Dinh Chieu, Da Kao Ward, District 1, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884  •  sales@abc-vietnam.com  •  www.abc-vietnam.com</p>
+                            <p class="text-center" style="font-size:11px">Factory address: 621 Hanoi highway, Group KP5,  Linh Trung Ward, Thu Duc District, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884</p>
+                            <p class="text-center" style="font-size:11px">Techcombank  •   Tran Nao Branch  •  125 Tran Nao Street, Binh An Ward, District 2, Ho Chi Minh, Vietnam  •  SWIFT: VTCBVNVX  •  VND: 19135665385012  •  USD: 19135665385020</p>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

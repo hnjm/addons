@@ -14,10 +14,30 @@
     </data>
 
     <template id="report_sale_order_template">
+
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.external_layout">
                     <div class="page">
+                        <style>
+                             td {
+                                border-left: 1px solid white !important;
+                                border-right: 1px solid white !important;
+                                border-top: 1px solid #FF9900 !important;
+                                border-bottom: 1px solid #FF9900 !important;
+                            }
+                            .sale_order_line{
+                                border-top: 1px solid white !important;
+                                border-bottom: 1px solid white !important;
+                            }
+                            .sale_order_line_1{
+                                border-bottom: 1px solid #FF9900 !important;
+                            }
+                            .title-address{
+                                font-size: 18px;
+                                font-weight: bolder;
+                            }
+                        </style>
                         <div class="row">
                             <img t-att-src="'data:image/png;base64,%s' % to_text(o.company_id.logo)"/>
                         </div>
@@ -26,19 +46,19 @@
                             </div>
                             <div class="col-5">
                                 <div>
-                                    Company : <t t-esc="o.company_id.name" />
+                                    <span class="title-address"><t t-esc="o.partner_id.parent_id.name" /></span>
                                 </div>
                                 <div>
-                                    Contact person
+                                    <span class="title-address"><t t-esc="o.partner_id.name" /></span>
                                 </div>
                                 <div>
-                                    Address : <t t-esc="o.partner_id.street" />
+                                    <span class="title-address"><t t-esc="o.partner_id.street" /></span>
                                 </div>
                                 <div>
-                                    Address
+                                    <span class="title-address"><t t-esc="o.partner_id.street2" />, <t t-esc="o.partner_id.city" />, <t t-esc="o.partner_id.state_id.name" />, <t t-esc="o.partner_id.zip" /></span>
                                 </div>
                                 <div>
-                                    Country : <t t-esc="o.partner_id.country_id.name" />
+                                    <span class="title-address"><t t-esc="o.partner_id.country_id.name" /></span>
                                 </div>
                             </div>
                         </div>
@@ -48,10 +68,10 @@
                                 <tr>
                                   <td colspan="9">
                                     <div class="row">
-                                        <div class="col-7 text-center mt-3">
+                                        <div class="col-6 text-center mt-3">
                                             <span style="font-size: 22px; font-weight: bolder">QUOTATION</span>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <div class="text-left">
                                                 <span>
                                                     <span style="margin-right: 10px;">Quotation number</span>
@@ -66,7 +86,7 @@
                                                     <span style="margin-left: 24px;">:</span>
                                                     <span class="span-header-three"><t t-esc="o.date_order" /></span>
                                                 </span>
-                                                <span style="margin-left: 15px;">Week :</span>
+                                                <span style="margin-left: 15px;">Week: <t t-esc="o.get_current_week_of_year()"/></span>
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +95,7 @@
                                 <tr>
                                   <td colspan="9">
                                     <div class="row">
-                                        <div class="col-7">
+                                        <div class="col-6">
                                             <div style="margin-left: 10px">
                                                 <span>Your Reference</span>
                                                 <span style="margin-left: 10px">:</span>
@@ -92,12 +112,12 @@
                                                 <span style="margin-left: 10px"><t t-esc="o.partner_id.email" /></span>
                                             </div>
                                         </div>
-                                        <div class="col-5">
+                                        <div class="col-6">
                                             <div class="text-left">
                                                 <span>
                                                     <span>Validity Quotation</span>
                                                     <span style="margin-left:10px">:</span>
-                                                    <span class="span-header-three-1"><t t-esc="o.validity_quotation()" /> </span>
+                                                    <span class="span-header-three-1"><t t-esc="o.format_date(o.validity_date)" /> </span>
                                                 </span>
                                             </div>
                                             <div class="text-left">
@@ -124,35 +144,36 @@
                                   <td>Rev</td>
                                   <td>Description</td>
                                   <td>Quantity</td>
-                                  <td>$</td>
                                   <td>Unit Price</td>
-                                  <td>$</td>
                                   <td>Total</td>
                                 </tr>
                                   <t t-set="i" t-value="0" />
                                 <t t-foreach="o.order_line" t-as="p">
                                     <t t-set="i" t-value="i+10"/>
                                     <tr>
-                                      <td><t t-esc="i" /></td>
-                                      <td><t t-esc="p.product_id.product_tmpl_id.default_code" /></td>
-                                      <td>-</td>
-                                      <td><t t-esc="p.product_id.name" /></td>
-                                      <td><t t-esc="p.product_uom_qty" /></td>
-                                      <td>$</td>
-                                      <td><t t-esc="p.price_unit" /></td>
-                                      <td>$</td>
-                                      <td><t t-esc="p.price_subtotal" /></td>
+                                      <td class="sale_order_line"><t t-esc="i" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.revision"/></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_id.name" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_uom_qty" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.format_currency(p.price_unit)" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.format_currency(p.price_subtotal)" /></td>
                                     </tr>
                                 </t>
                                 <tr>
                                     <td colspan="7">
 
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+
+                                    </td>
                                     <td>
                                         Subtotal
                                     </td>
                                     <td>
-                                        <t t-esc="o.total_sale_order()" />
+                                        <t t-esc="o.format_currency(float(o.total_sale_order()))" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -160,14 +181,6 @@
                                         <t t-raw="o.note" />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="9">
-                                        <div class="row" style="margin-left: 5px">
-                                            Shipping : <t t-esc="o.incoterm.name" />
-                                        </div>
-                                    </td>
-                                </tr>
-
                               </tbody>
                             </table>
                         </div>
@@ -177,8 +190,18 @@
                         <div class="row mt-1">
                             With kind regards,
                         </div>
+                        <div class="row mt-5">
+                             <t t-esc="o.user_id.name" />
+                        </div>
                         <div class="row mt-1">
-                            Christiaan Romme
+                            <t t-esc="o.user_id.partner_id.function" />
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <div style="border-top: 1px solid #FF9900; border-bottom: 1px solid #FF9900">
+                            <p class="text-center" style="font-size:11px">Indochina Park tower, 19th floor, 4 Nguyen Dinh Chieu, Da Kao Ward, District 1, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884  •  sales@abc-vietnam.com  •  www.abc-vietnam.com</p>
+                            <p class="text-center" style="font-size:11px">Factory address: 621 Hanoi highway, Group KP5,  Linh Trung Ward, Thu Duc District, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884</p>
+                            <p class="text-center" style="font-size:11px">Techcombank  •   Tran Nao Branch  •  125 Tran Nao Street, Binh An Ward, District 2, Ho Chi Minh, Vietnam  •  SWIFT: VTCBVNVX  •  VND: 19135665385012  •  USD: 19135665385020</p>
                         </div>
                     </div>
                 </t>

@@ -93,29 +93,31 @@
                                     <tr>
                                         <th><strong>Operation</strong></th>
                                         <th><strong>WorkCenter</strong></th>
-                                        <th><strong>No. Of Minutes</strong></th>
+                                        <th><strong>Setup Time (h)</strong></th>
+                                        <th><strong>Operation Time (h)</strong></th>
+                                        <th><strong>Tot Time (h)</strong></th>
                                     </tr>
-                                    <tr t-foreach="o.workorder_ids" t-as="line2">
-                                        <td><span t-field="line2.name"/></td>
-                                        <td><span t-field="line2.workcenter_id.name"/></td>
-                                        <td>
-                                            <span t-if="o.state != 'done'" t-field="line2.duration_expected"/>
-                                            <span t-if="o.state == 'done'" t-field="line2.duration"/>
-                                        </td>
-                                    </tr>
+                                    <t t-foreach="o.workorder_ids" t-as="line2">
+                                        <t t-set="setup_time" t-value="(line2.workcenter_id.time_start)/60" /> 
+                                        <t t-set="operation_time" t-value="(line2.operation_id.time_cycle)/60" /> 
+                                        <t t-set="tot_time" t-value="(line2.workcenter_id.time_start + line2.operation_id.time_cycle * o.product_qty)/60" /> 
+                                        <tr>
+                                            <td><span t-field="line2.name"/></td>
+                                            <td><span t-field="line2.workcenter_id.name"/></td>
+                                            <td><span t-esc="setup_time" t-options='{"widget": "float_time"}'/></td>
+                                            <td><span t-esc="operation_time" t-options='{"widget": "float_time"}'/></td>
+                                            <td><span t-esc="tot_time" t-options='{"widget": "float_time"}'/></td>
+                                        </tr>
+                                        <tr t-if="line2.operation_id.note">
+                                            <td colspan="5">
+                                                <div t-field="line2.operation_id.note"></div>
+                                            </td>
+                                        </tr>
+                                    </t>
                                 </table>
                             </div>
                             <div class="oe_structure"/>
-                            <div t-if="o.workorder_ids" groups="mrp.group_mrp_routings">
-                                <h3>
-                                    <span>Operation Description</span>
-                                </h3>
-                                <t t-foreach="o.workorder_ids" t-as="line3">
-                                    <h5 t-field="line3.operation_id.name"></h5>
-                                    <div t-field="line3.operation_id.note"></div>
-                                    <hr></hr>
-                                </t>
-                            </div>
+                          
 
                             
                         </div>

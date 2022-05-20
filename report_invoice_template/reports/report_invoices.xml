@@ -23,7 +23,7 @@
                 <t t-call="web.external_layout">
                     <div class="page">
                         <style>
-                             td {
+                            td {
                                 border-left: 1px solid white !important;
                                 border-right: 1px solid white !important;
                                 border-top: 1px solid #FF9900 !important;
@@ -39,6 +39,9 @@
                             .title-address{
                                 font-size: 18px;
                                 font-weight: bolder;
+                            }
+                            .tdnarration td{
+                                border: none !important
                             }
                         </style>
                         <div class="row">
@@ -67,7 +70,7 @@
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered invoice">
                               <tbody>
                                 <tr>
                                   <td colspan="9">
@@ -146,7 +149,7 @@
                                 <t t-set="total_sale_order" t-value="0"/>
                                 <t t-foreach="o.invoice_line_ids" t-as="p">
                                     <t t-set="total_sale_order" t-value="total_sale_order + p.price_subtotal" /> 
-                                    <tr>
+                                    <tr class='detail'>
                                       <td colspan="4" class="invoice_line"><t t-esc="p.name" /></td>
                                       <td colspan="1" class="invoice_line"><t t-esc="p.quantity" /></td>
                                       <td colspan="2" class="invoice_line"><t t-esc="'${:,.2f}'.format(p.price_unit)" /></td>
@@ -169,16 +172,16 @@
                                         <t t-esc="'${:,.2f}'.format(total_sale_order)" />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="9">
-                                        <t t-raw="o.narration" />
+                                <tr t-if="not is_html_empty(o.narration)"  >
+                                    <td colspan="9" class='tdnarration'>
+                                         <span t-field="o.narration"/>
                                     </td>
                                 </tr>
                               </tbody>
                             </table>
                         </div>
                         
-                        <div class="row mt-1">
+                        <div class="row mt-3">
                             With kind regards,
                         </div>
                         <div class="row mt-5">

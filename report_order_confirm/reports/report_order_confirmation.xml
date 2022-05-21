@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
      <data>
-        <record id="account.account_invoices" model="ir.actions.report">
+        
+        <record id="sale.action_report_saleorder" model="ir.actions.report">
             <field name="binding_model_id" eval="False"/>
         </record>
-        <record id="action_report_invoice_template" model="ir.actions.report">
-            <field name="name">Invoices</field>
-            <field name="model">account.move</field>
+        <record id="action_order_confirmation" model="ir.actions.report">
+            <field name="name">Order Confirmation</field>
+            <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">report_invoice_template.report_invoice_document_new</field>
-            <field name="report_file">report_invoice_template.report_invoice_document_new</field>
-            <field name="print_report_name">'Invoice'</field>
-             <field name="attachment">(object.state == 'posted') and ((object.name or 'INV').replace('/','_')+'.pdf')</field>
-            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="report_name">report_order_confirm.report_order_confirmation_new</field>
+            <field name="report_file">report_order_confirm.report_order_confirmation_new</field>
+            <field name="print_report_name">'Order Confirmation'</field>
+            <field name="binding_model_id" ref="sale.model_sale_order"/>
             <field name="binding_type">report</field>
         </record>
     </data>
 
-    <template id="report_invoice_document_new">
+    <template id="report_order_confirmation_new">
 
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
@@ -30,11 +30,11 @@
                                 border-top: 1px solid #FF9900 !important;
                                 border-bottom: 1px solid #FF9900 !important;
                             }
-                            .invoice_line{
+                            .sale_order_line{
                                 border-top: 1px solid white !important;
                                 border-bottom: 1px solid white !important;
                             }
-                            .invoice_line_1{
+                            .sale_order_line_1{
                                 border-bottom: 1px solid #FF9900 !important;
                             }
                             .title-address{
@@ -52,7 +52,6 @@
                             <div class="col-6">
                             </div>
                             <div class="col-6">
-                                <strong t-if="o.move_type == 'out_invoice'">Buyer:</strong>
                                 <div>
                                     <span class="title-address"><t t-esc="o.partner_id.parent_id.name" /></span>
                                 </div>
@@ -71,23 +70,41 @@
                             </div>
                         </div>
                         <div class="row mt-5">
-                            <table class="table table-bordered invoice">
+                            <table class="table table-bordered">
                               <tbody>
                                 <tr>
                                   <td colspan="9">
                                     <div class="row">
                                         <div class="col-6 text-center">
-                                            <span style="font-size: 22px; font-weight: bolder">Invoice</span>
+                                            <span style="font-size: 22px; font-weight: bolder">Order Confirmation</span>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="text-left">
                                                 <span>
-                                                    <span style="margin-right: 10px;">Invoice number</span>
-                                                    <span style="margin-left: 28px;">:</span>
-                                                    <span class="span-header-three-1"  style="margin-left: 10px"><t t-esc="o.name" /></span>
+                                                    <span style="margin-right: 10px;">Order number</span>
+                                                    <span style="margin-left: 25px;">:</span>
+                                                    <span class="span-header-three-1" style="margin-left: 10px"><t t-esc="o.name" /></span>
                                                 </span>
                                             </div>
-                                            
+                                            <div class="text-left">
+                                                <span>
+                                                    <span style="margin-right: 10px;">Order date</span>
+                                                    <span style="margin-left: 47px;">:</span>
+                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.date_order" /></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="text-left">
+                                                <span>Rev</span>
+                                                <span style="margin-left: 16px;">:</span>
+                                                <span class="span-header-three-1" style="margin-left: 10px">00</span>
+                                            </div>
+                                            <div class="text-left">
+                                                <span>Week</span>
+                                                <span style="margin-left: 3px;">:</span>
+                                                <span class="span-header-three-1" style="margin-left: 10px"><t t-esc="o.date_order.strftime('%V')"/></span>
+                                            </div>
                                         </div>
                                     </div>
                                   </td>
@@ -98,8 +115,8 @@
                                         <div class="col-6">
                                             <div style="margin-left: 10px">
                                                 <span>Your Order nr.</span>
-                                                <span style="margin-left: 13px">:</span>
-                                                <span style="margin-left: 10px"><t t-esc="o.ref" /></span>
+                                                <span style="margin-left: 14px">:</span>
+                                                <span style="margin-left: 10px"><t t-esc="o.client_order_ref" /></span>
                                             </div>
                                             <div style="margin-left: 10px">
                                                 <span>Your phone nr.</span>
@@ -108,53 +125,62 @@
                                             </div>
                                             <div style="margin-left: 10px">
                                                 <span>Your e-mail</span>
-                                                <span style="margin-left: 36px">:</span>
+                                                <span style="margin-left: 35px">:</span>
                                                 <span style="margin-left: 10px"><t t-esc="o.partner_id.email" /></span>
                                             </div>
                                         </div>
                                         <div class="col-6">
+                                            
                                             <div class="text-left">
                                                 <span>
-                                                    <span style="margin-right: 10px;">Invoice date</span>
-                                                    <span style="margin-left: 49px;">:</span>
-                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.invoice_date" /></span>
+                                                    <span >Delivery time</span>
+                                                    <span style="margin-left: 39px;">:</span>
+                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.commitment_date" /></span>
                                                 </span>
                                               
                                             </div>
                                             <div class="text-left">
                                                 <span>
-                                                    <span style="margin-right: 10px;">Incoterms</span>
-                                                    <span style="margin-left: 64px;">:</span>
-                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.invoice_incoterm_id.name" /></span>
+                                                    <span >Incoterms</span>
+                                                    <span style="margin-left: 61px;">:</span>
+                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.incoterm.name" /></span>
                                                 </span>
-                                              
                                             </div>
                                             <div class="text-left">
                                                 <span>
-                                                    <span style="margin-right: 10px;">Terms of payment</span>
-                                                    <span style="margin-left: 10px;">:</span>
-                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.invoice_payment_term_id.name" /></span>
+                                                    <span >Terms of payment</span>
+                                                    <span style="margin-left: 8px;">:</span>
+                                                    <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.payment_term_id.name" /></span>
                                                 </span>
-                                              
                                             </div>
                                         </div>
                                     </div>
                                   </td>
                                 </tr>
                                 <tr>
-                                  <td colspan="4">Description</td>
-                                  <td colspan="1">Quantity</td>
-                                  <td colspan="2">Unit Price (<span t-esc="o.currency_id.name"></span>)</td>
-                                  <td colspan="2" class="text-right">Total</td>
+                                  <td>Line</td>
+                                  <td>Item nr.</td>
+                                  <td>Rev</td>
+                                  <td colspan="2">Description</td>
+                                  <td>Lead Time</td>
+                                  <td>Quantity</td>
+                                  <td>Unit Price</td>
+                                  <td class="text-right">Total</td>
                                 </tr>
                                 <t t-set="total_sale_order" t-value="0"/>
-                                <t t-foreach="o.invoice_line_ids" t-as="p">
+                                <t t-set="i" t-value="0" />
+                                <t t-foreach="o.order_line" t-as="p">
                                     <t t-set="total_sale_order" t-value="total_sale_order + p.price_subtotal" /> 
+                                    <t t-set="i" t-value="i+10"/>
                                     <tr class='detail'>
-                                      <td colspan="4" class="invoice_line"><t t-esc="p.name" /></td>
-                                      <td colspan="1" class="invoice_line"><t t-esc="p.quantity" /></td>
-                                      <td colspan="2" class="invoice_line"><t t-esc="'${:,.2f}'.format(p.price_unit)" /></td>
-                                      <td colspan="2" class="invoice_line text-right"><t t-esc="'${:,.2f}'.format(p.price_subtotal)" /></td>
+                                      <td class="sale_order_line"><t t-esc="i" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.revision"/></td>
+                                      <td colspan="2" class="sale_order_line"><t t-esc="p.name" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.customer_lead" /></td>
+                                      <td class="sale_order_line"><t t-esc="p.product_uom_qty" /></td>
+                                      <td class="sale_order_line"><t t-esc="'${:,.2f}'.format(p.price_unit)" /></td>
+                                      <td class="sale_order_line text-right"><t t-esc="'${:,.2f}'.format(p.price_subtotal)" /></td>
                                     </tr>
                                 </t>
                                 <tr>
@@ -173,28 +199,26 @@
                                         <t t-esc="'${:,.2f}'.format(total_sale_order)" />
                                     </td>
                                 </tr>
-                                <tr t-if="not is_html_empty(o.narration)"  >
+                                <tr t-if="not is_html_empty(o.note)"  >
                                     <td colspan="9" class='tdnarration'>
-                                         <span t-field="o.narration"/>
+                                         <span t-field="o.note"/>
                                     </td>
                                 </tr>
                               </tbody>
                             </table>
                         </div>
-                        
+                        <div class="row mt-3">
+                            We thank you for your interest and are looking forward to receive this order.
+                        </div>
                         <div class="row mt-3">
                             With kind regards,
                         </div>
                         <div class="row mt-5">
-                            <span>Christiaan Romme</span><br/>
-                            <span>General Director</span>
-                        </div>
-                        <!-- <div class="row mt-5">
                              <t t-esc="o.user_id.name" />
                         </div>
                         <div class="row mt-1">
                             <t t-esc="o.user_id.partner_id.function" />
-                        </div> -->
+                        </div>
                     </div>
                     <div class="footer">
                         <div style="border-top: 1px solid #FF9900; border-bottom: 1px solid #FF9900">

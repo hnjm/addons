@@ -35,7 +35,7 @@
             <t t-out="0"/>
         </div>
 
-        <div t-attf-class="footer" style="line-height:1px;font-size:11px;border-top: 1px solid #FF9900; border-bottom: 1px solid #FF9900; margin:20px 0 0 0;padding:10px 5px 0 5px">
+        <div t-attf-class="footer" style="line-height:1px;font-size:10px;border-top: 1px solid #FF9900; border-bottom: 1px solid #FF9900; margin:20px 0 0 0;padding:10px 5px 0 5px">
             <p class="text-center">Indochina Park tower, 19th floor, 4 Nguyen Dinh Chieu, Da Kao Ward, District 1, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884  •  sales@abc-vietnam.com  •  www.abc-vietnam.com</p>
             <p class="text-center">Factory address: 621 Hanoi highway, Group KP5,  Linh Trung Ward, Thu Duc District, Ho Chi Minh, Vietnam  •  T: +84 28 627 55 884</p>
             <p class="text-center">Techcombank  •   Tran Nao Branch  •  125 Tran Nao Street, Binh An Ward, District 2, Ho Chi Minh, Vietnam  •  SWIFT: VTCBVNVX  •  VND: 19135665385012  •  USD: 19135665385020</p>

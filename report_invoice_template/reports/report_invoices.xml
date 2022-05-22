@@ -118,7 +118,7 @@
                                                             <span>
                                                                 <span style="margin-right: 10px;">Invoice date</span>
                                                                 <span style="margin-left: 49px;">:</span>
-                                                                <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.invoice_date" /></span>
+                                                                <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.invoice_date" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/></span>
                                                             </span>
                                                         
                                                         </div>

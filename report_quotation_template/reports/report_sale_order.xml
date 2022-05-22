@@ -85,7 +85,7 @@
                                                     <span>
                                                         <span style="margin-right: 10px;">Quotation date</span>
                                                         <span style="margin-left: 24px;">:</span>
-                                                        <span class="span-header-three"><t t-esc="o.date_order" t-options='{"widget": "date"}'/></span>
+                                                        <span class="span-header-three"><t t-esc="o.date_order" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/></span>
                                                     </span>
                                                     <span style="margin-left: 40px;">Week: <t t-esc="o.date_order.strftime('%V')"/></span>
                                                 </div>
@@ -118,7 +118,7 @@
                                                     <span>
                                                         <span>Validity Quotation</span>
                                                         <span style="margin-left:10px">:</span>
-                                                        <span class="span-header-three-1"><t t-esc="o.format_date(o.validity_date)" /> </span>
+                                                        <span class="span-header-three-1"><t t-esc="o.format_date(o.validity_date)" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/> </span>
                                                     </span>
                                                 </div>
                                                 <div class="text-left">

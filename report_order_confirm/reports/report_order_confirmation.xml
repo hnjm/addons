@@ -88,7 +88,7 @@
                                                     <span>
                                                         <span style="margin-right: 10px;">Order date</span>
                                                         <span style="margin-left: 47px;">:</span>
-                                                        <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.date_order" t-options='{"widget": "date"}' /></span>
+                                                        <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.date_order" t-options='{"widget": "date","format": "dd-MM-yyyy"}' /></span>
                                                     </span>
                                                 </div>
                                             </div>
@@ -133,7 +133,7 @@
                                                     <span>
                                                         <span >Delivery time</span>
                                                         <span style="margin-left: 39px;">:</span>
-                                                        <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.commitment_date" t-options='{"widget": "date"}'/></span>
+                                                        <span class="span-header-three" style="margin-left: 10px"><t t-esc="o.commitment_date" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/></span>
                                                     </span>
                                                 
                                                 </div>

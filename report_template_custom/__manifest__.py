@@ -3,15 +3,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "REPORT INVOICE TEMPLATE",
+    "name": "REPORT TEMPLATE CUSTOM",
     "version": "15E",
-    "category": "ACCOUNT",
+    "category": "REPORT",
     "license": "AGPL-3",
     "summary": "",
     "author": "Tran Trang",
-    "depends": ["account",'report_template_custom'],
+    "depends": ["base",'web'],
     "data": [
-        'reports/report_invoices.xml',
+        'reports/report_template_common.xml',
 
     ],
     "installable": True,

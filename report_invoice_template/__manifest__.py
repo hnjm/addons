@@ -12,7 +12,7 @@
     "depends": ["account",'report_template_custom'],
     "data": [
         'reports/report_invoices.xml',
-
+        'reports/report_proforma_invoice.xml',
     ],
     "installable": True,
 }

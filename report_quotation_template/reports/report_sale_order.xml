@@ -18,172 +18,203 @@
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t t-call="report_template_custom.custom_layout">
-                    <div class="page">
-                        <style>
-                             td {
-                                border-left: 1px solid white !important;
-                                border-right: 1px solid white !important;
-                                border-top: 1px solid #FF9900 !important;
-                                border-bottom: 1px solid #FF9900 !important;
-                            }
-                            .sale_order_line{
-                                border-top: 1px solid white !important;
-                                border-bottom: 1px solid white !important;
-                            }
-                            .sale_order_line_1{
-                                border-bottom: 1px solid #FF9900 !important;
-                            }
-                            .title-address{
-                                font-size: 18px;
-                                font-weight: bolder;
-                            }
-                            .tdnarration td{
-                                border: none !important
-                            }
-                        </style>
+                    <div class="page page_custom">
+                       <link rel='stylesheet' href='/report_template_custom/static/src/css/style.css'/>
                         <div class="row">
-                            <div class="col-7">
+                            <div class="col-6">
                             </div>
-                            <div class="col-5">
-                                <div>
-                                    <span class="title-address"><t t-esc="o.partner_id.parent_id.name" /></span>
-                                </div>
-                                <div>
-                                    <span class="title-address"><t t-esc="o.partner_id.name" /></span>
-                                </div>
-                                <div>
-                                    <span class="title-address"><t t-esc="o.partner_id.street" /></span>
-                                </div>
-                                <div>
-                                    <span class="title-address"><t t-esc="o.partner_id.street2" />, <t t-esc="o.partner_id.city" />, <t t-esc="o.partner_id.state_id.name" />, <t t-esc="o.partner_id.zip" /></span>
-                                </div>
-                                <div>
-                                    <span class="title-address"><t t-esc="o.partner_id.country_id.name" /></span>
+                            <div class="col-6">
+                                <div class='address'>
+                                    <t t-if="o.partner_id.parent_id.name" t-esc="o.partner_id.parent_id.name" /><br t-if="o.partner_id.parent_id.name"/>
+                                    <t t-if="o.partner_id.name" t-esc="o.partner_id.name" /><br t-if="o.partner_id.name"/>
+                                    <t t-if="o.partner_id.street" t-esc="o.partner_id.street" /><br t-if="o.partner_id.street"/>
+                                    <t t-esc="o.partner_id.street2" /><span  t-if="o.partner_id.street2">,</span> <t t-esc="o.partner_id.city" /><span  t-if="o.partner_id.city">,</span> <t t-esc="o.partner_id.state_id.name" /><span  t-if="o.partner_id.state_id.name">,</span> <t t-esc="o.partner_id.zip" />
+                                    <br t-if="o.partner_id.street2 or o.partner_id.city or o.partner_id.state_id.name or o.partner_id.zip"/>
+                                    <t t-if="o.partner_id.country_id.name" t-esc="o.partner_id.country_id.name" />
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-5">
-                            <div class='col-12'>
-                                <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                    <td colspan="9">
-                                        <div class="row">
-                                            <div class="col-6 text-center">
-                                                <span style="font-size: 22px; font-weight: bolder">QUOTATION</span>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-left">
-                                                    <span>
-                                                        <span style="margin-right: 10px;">Quotation number</span>
-                                                        <span style="margin-left: 2px;">:</span>
-                                                        <span class="span-header-three-1"><t t-esc="o.name" /></span>
-                                                    </span>
-                                                    <span style="margin-left: 40px;">Rev : 00</span>
-                                                </div>
-                                                <div class="text-left">
-                                                    <span>
-                                                        <span style="margin-right: 10px;">Quotation date</span>
-                                                        <span style="margin-left: 24px;">:</span>
-                                                        <span class="span-header-three"><t t-esc="o.date_order" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/></span>
-                                                    </span>
-                                                    <span style="margin-left: 40px;">Week: <t t-esc="o.date_order.strftime('%V')"/></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                    <td colspan="9">
-                                        <div class="row">
-                                            <div class="col-6">
-                                                <div >
-                                                    <span>Your Reference</span>
-                                                    <span style="margin-left: 10px">:</span>
-                                                    <span style="margin-left: 10px"><t t-esc="o.client_order_ref" /></span>
-                                                </div>
-                                                <div>
-                                                    <span>Your phone nr.</span>
-                                                    <span style="margin-left: 13px">:</span>
-                                                    <span style="margin-left: 10px"> <t t-esc="o.partner_id.phone" /></span>
-                                                </div>
-                                                <div>
-                                                    <span>Your e-mail</span>
-                                                    <span style="margin-left: 35px">:</span>
-                                                    <span style="margin-left: 10px"><t t-esc="o.partner_id.email" /></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="text-left">
-                                                    <span>
-                                                        <span>Validity Quotation</span>
-                                                        <span style="margin-left:10px">:</span>
-                                                        <span class="span-header-three-1"><t t-esc="o.format_date(o.validity_date)" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/> </span>
-                                                    </span>
-                                                </div>
-                                                <div class="text-left">
-                                                    <span>
-                                                        <span>Incoterms</span>
-                                                        <span style="margin-left: 70px">:</span>
-                                                        <span class="span-header-three"><t t-esc="o.incoterm.name" /></span>
-                                                    </span>
-                                                </div>
-                                                <div class="text-left">
-                                                    <span>
-                                                        <span>Terms of payment</span>
-                                                        <span style="margin-left: 15px">:</span>
-                                                        <span class="span-header-three"><t t-esc="o.payment_term_id.name" /></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Line</td>
-                                        <td>Item nr.</td>
-                                        <td>Rev</td>
-                                        <td colspan="2">Description</td>
-                                        <td class="text-right">Quantity</td>
-                                        <td class="text-center">Unit Price</td>
-                                        <td colspan="2" class="text-right">Total</td>
-                                    </tr>
-                                    <t t-set="i" t-value="0" />
-                                    <t t-foreach="o.order_line" t-as="p">
-                                        <t t-set="i" t-value="i+10"/>
-                                        <tr>
-                                        <td class="sale_order_line"><t t-esc="i" /></td>
-                                        <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></td>
-                                        <td class="sale_order_line"><t t-esc="p.product_id.product_tmpl_id.revision"/></td>
-                                        <td colspan="2" class="sale_order_line"><t t-esc="p.product_id.name" /></td>
-                                        <td class="sale_order_line text-right"><t t-esc="p.product_uom_qty" /></td>
-                                        <td class="sale_order_line text-right"><t t-esc="p.format_currency(p.price_unit)" /></td>
-                                        <td colspan="2" class="sale_order_line text-right"><t t-esc="p.format_currency(p.price_subtotal)" /></td>
-                                        </tr>
-                                    </t>
-                                    <tr>
-                                        <td colspan="9">
-
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="6">
-
-                                        </td>
-                                        <td class="text-center">
-                                            Subtotal
-                                        </td>
-                                        <td colspan="2" class="text-right">
-                                            <t t-esc="o.format_currency(float(o.total_sale_order()))" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="9" class='tdnarration'>
-                                            <t t-raw="o.note" />
-                                        </td>
-                                    </tr>
-                                </tbody>
+                        <div class="row line_orange">
+                            <div class="col-6 card_name_report" >
+                                <t style="name_report">QUOTATION</t>
+                            </div>
+                            <div class="col-4">
+                                <div class='row'>
+                                    <div class='col-6'>
+                                        <span class='title_info'>Quotation number</span>
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-6'>
+                                        <span class="value_info"><t t-esc="o.name" /></span>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-6'>
+                                        <span class='title_info'>Quotation date</span>
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-6'>
+                                        <span class=" value_info"><t t-esc="o.date_order" t-options='{"widget": "date","format": "dd-MM-yyyy"}' /></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="col-2">
+                                <div class='row'>
+                                    <div class='col-6'>
+                                        <span class='title_info'>Rev</span>
+                                        
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-6'>
+                                        <span class='title_info'>Week</span>
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-6'>
+                                        <span class="value_info"><t t-esc="o.get_current_week_of_year()"/></span>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="row line_orange">
+                            <div class='col-6'>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Your Order nr.</span>
+                                        
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.client_order_ref" /></span>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Your phone nr.</span>
+                                        
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.partner_id.phone" /></span>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Your e-mail.</span>
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.partner_id.email" /></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='col-6'>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Validity Quotation</span>
+                                        
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.format_date(o.validity_date)" t-options='{"widget": "date","format": "dd-MM-yyyy"}'/></span>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Incoterms</span>
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.incoterm.name" /></span>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-4'>
+                                        <span class='title_info'>Terms of payment.</span>
+                                        
+                                    </div>
+                                    <div  class='point text-right'>:</div>
+                                    <div class='col-8'>
+                                        <span class="value_info"><t t-esc="o.payment_term_id.name" /></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row info_product">
+                            <div style='width:5%'>
+                                <span>Line</span>
+                            </div>
+                            <div style='width:10%'>
+                                <span>Item nr.</span>
+                            </div>
+                             <div style='width:5%'>
+                                <span>Rev</span>
+                            </div>
+                            <div  style='width:30%'>
+                                <span>Description</span>
+                            </div>
+                            <div class='text-right' style='width:10%'>
+                                <span>Quantity</span>
+                            </div>
+                            <div class='text-right' style='width:10%'>
+                                <span>Unit Price</span>
+                            </div>
+                            <div  style='width:15%'>
+                                <span>Taxes</span>
+                            </div>
+                            <div class='text-right'  style='width:15%'>
+                                <span>Amount</span>
+                            </div>
+                        </div>
+                        <t t-set="i" t-value="0" />
+                        <t t-foreach="o.order_line" t-as="p">
+                            <t t-set="i" t-value="i+10"/>
+                            <div class="row detail_product">
+                                <div style='width:5%'>
+                                    <span><t t-esc="i" /></span>
+                                </div>
+                                <div style='width:10%'>
+                                    <span><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></span>
+                                </div>
+                                <div style='width:5%'>
+                                    <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
+                                </div>
+                                <div style='width:30%'>
+                                    <span><t t-esc="p.product_id.name" /></span>
+                                </div>
+                                <div class='text-right' style='width:10%'>
+                                    <span><t t-esc="p.product_uom_qty" /></span>
+                                </div>
+                                <div class='text-right' style='width:10%'> 
+                                    <span><t t-esc="'${:,.2f}'.format(p.price_unit)" /></span>
+                                </div>
+                                <div style='width:15%'>
+                                    <span><t t-esc="', '.join(map(lambda x: (x.description or x.name), p.tax_id))"/></span>
+                                </div>
+                                <div class='text-right' style='width:15%'>
+                                    <span><t t-esc="'${:,.2f}'.format(p.price_subtotal)" /></span>
+                                </div>
+                            </div>
+                        </t>
+                        <div class='row line_orange'/>
+                        
+                        <div class="row ">
+                            <div style='width:70%' >
+                           
+                            </div>
+                            <div class='text-right' style='width:30%'>
+                                <table class="table table-borderless m-0 info_total">
+                                    <t t-set="tax_totals" t-value="json.loads(o.tax_totals_json)"/>
+                                    <t t-call="account.document_tax_totals"/>
                                 </table>
+                            </div>
+                        </div>
+                        <div class="row line_note">
+                            <div class="col-12 pl-4">
+                                <span t-field="o.note"/>
                             </div>
                         </div>
                          <div class="row mt-3">

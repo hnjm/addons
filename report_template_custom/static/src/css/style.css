@@ -1,0 +1,77 @@
+.page_custom{
+    font-size:0.75em !important;
+   
+}
+.page_custom .address{
+    font-size: 1em !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    padding-bottom: 6em;
+    padding-top:0!important;
+}
+.card_name_report{
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: center;
+    display: flex;
+    align-items: center;
+  
+}
+.name_report{
+    display:inline-block;
+    display: flex;
+    align-items: center;
+}
+.point{
+    display: inline-block;
+    text-align: right;
+}
+
+.line_orange{
+    border-top: 2px solid #e99d4e;
+    padding-bottom:2px;
+    padding-top: 2px;
+}
+.info_product,.line_note{
+    border-top: 2px solid #e99d4e;
+    border-bottom: 2px solid #e99d4e;
+    padding-bottom:2px;
+    padding-top: 2px;
+    font-weight:bold;
+}
+
+.info_product div{
+ 
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+.detail_product div{
+ 
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+.info_total{
+    font-size:1em;
+    font-weight:bold;
+    display:flex;
+    justify-content: flex-end;
+}
+
+.info_total .border-black td, .border-black th {
+    border-top: none !important;
+}
+.page_custom .table th,
+.page_custom .table td {
+  padding-top:0 !important;
+  padding-bottom:0 !important;
+  padding-right:10px;
+  vertical-align: top;
+  border:none !important;
+  /* border-top: 1px solid #dee2e6 !important; */
+
+}
+.info_total tr:not(:last-child) td{
+    border-bottom: 2px solid #e99d4e !important;
+}

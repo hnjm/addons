@@ -14,5 +14,6 @@
         'reports/report_template_common.xml',
 
     ],
+   
     "installable": True,
 }

@@ -156,14 +156,14 @@
                             <div  style='width:30%'>
                                 <span>Description</span>
                             </div>
+                            <div  style='width:15%'>
+                                <span>Taxes</span>
+                            </div>
                             <div class='text-right' style='width:10%'>
                                 <span>Quantity</span>
                             </div>
                             <div class='text-right' style='width:10%'>
                                 <span>Unit Price</span>
-                            </div>
-                            <div  style='width:15%'>
-                                <span>Taxes</span>
                             </div>
                             <div class='text-right'  style='width:15%'>
                                 <span>Amount</span>
@@ -185,17 +185,17 @@
                                 <div style='width:30%'>
                                     <span><t t-esc="p.product_id.name" /></span>
                                 </div>
-                                <div class='text-right' style='width:10%'>
-                                    <span><t t-esc="p.product_uom_qty" /></span>
-                                </div>
-                                <div class='text-right' style='width:10%'> 
-                                    <span><t t-esc="'${:,.2f}'.format(p.price_unit)" /></span>
-                                </div>
                                 <div style='width:15%'>
                                     <span><t t-esc="', '.join(map(lambda x: (x.description or x.name), p.tax_id))"/></span>
                                 </div>
+                                <div class='text-right' style='width:10%'>
+                                    <span><t t-esc="p.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}'/></span>
+                                </div>
+                                <div class='text-right' style='width:10%'> 
+                                    <span><t t-esc="p.price_unit" t-options='{"widget": "float", "decimal_precision": "Product Price"}'/></span>
+                                </div>
                                 <div class='text-right' style='width:15%'>
-                                    <span><t t-esc="'${:,.2f}'.format(p.price_subtotal)" /></span>
+                                    <span><t t-esc="p.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}' /></span>
                                 </div>
                             </div>
                         </t>

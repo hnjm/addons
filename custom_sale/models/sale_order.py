@@ -70,21 +70,9 @@ class SaleOrder(models.Model):
         mrp = self.env['mrp.production'].browse(mrp_production_ids)
         res = []
         for line in mrp:
-            child_mrp = model.search([('origin', '=', line.name)])
+            child_mrp = model.search([('origin', '=', line.origin)])
             if child_mrp:
                 res += self.loop_child_mrp(child_mrp, line)
-        for dic in res:
-            key = (dic['child_id'])
-            if key in seen:
-                continue
-            result.append(dic)
-            seen.add(key)
-        for j, stt in enumerate(result):
-            check = model.search([('id', '=', int(stt['child_id']))])
-            check.sequence_mrp = j
-            convert_name = check.name.split('/')
-            res_name = convert_name[0] + '/' + convert_name[1]
-            check.mrp_ref = '{}.{}'.format(res_name + '/' + str(stt['so'])[1:], str(j+1).zfill(3))
         return res
 
     def action_view_mrp_production(self):
@@ -102,5 +90,84 @@ class SaleOrder(models.Model):
             'view_mode': 'tree,form',
         })
         return action
+
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        self.confirm_so_to_mo_get_name(self)
+        return res
+
+    def loop_child_mrp_all_data(self, child_mrp, line):
+        model = self.env['mrp.production']
+        arr = []
+        key = line.origin
+        for item in child_mrp:
+            child = model.search([('origin', '=', item.name)])
+            self.loop_child_mrp_all_data(child, line)
+            arr.append({key: {
+                'so': line.origin,
+                'child_id': item.id
+            }})
+            for not_origin in child:
+                arr.append({key: {
+                    'so': line.origin,
+                    'child_id': not_origin.id
+                }})
+        res = [{key: {'so': line.origin, 'child_id': line.id}}] + arr
+        return res
+
+    def confirm_so_to_mo_get_name(self, sale_order):
+        res = []
+        seen = set()
+        result = []
+        model = self.env['mrp.production']
+        for item_so in sale_order:
+            procurement_groups = self.env['procurement.group'].search([('sale_id', 'in', item_so.ids)])
+            mrp_production_ids = set(procurement_groups.stock_move_ids.created_production_id.ids) | \
+                                 set(procurement_groups.mrp_production_ids.ids)
+            mrp = self.env['mrp.production'].browse(mrp_production_ids)
+            for line in mrp:
+                child_mrp = model.search([('origin', '=', line.origin)])
+                if child_mrp:
+                    res += self.loop_child_mrp_all_data(child_mrp, line)
+        dd = defaultdict(list)
+        arr_key, arr_res = [], []
+        for d in res:
+            for key, value in d.items():
+                dd[key].append(value)
+                arr_key.append(key)
+        arr_check = list(dict.fromkeys(arr_key))
+        for child_key in arr_check:
+            arr_res.append(dd[child_key])
+        for item_dic in arr_res:
+            data_child = []
+            for dic in item_dic:
+                key = (dic['child_id'])
+                if key in seen:
+                    continue
+                data_child.append(dic)
+                seen.add(key)
+            if not data_child:
+                continue
+            result.append(data_child)
+        for stt in result:
+            for j, line_stt in enumerate(stt):
+                check = model.search([('id', '=', int(line_stt['child_id']))])
+                check.sequence_mrp = j
+                origin = self.env['mrp.production'].search([('origin', '=', check.name)])
+                convert_name = check.name.split('/')
+                res_name = convert_name[0] + '/' + convert_name[1]
+                check.name = '{}.{}'.format(res_name + '/' + str(line_stt['so'])[1:], str(j + 1).zfill(3))
+                check.mrp_ref = '{}.{}'.format(res_name + '/' + str(line_stt['so'])[1:], str(j + 1).zfill(3))
+                for io in origin:
+                    io.origin = check.name
+                check.mrp_ref = check.name
+        return res
+
+    def set_name_mo(self):
+        sale_order = self.env['sale.order'].search([
+            ('state', '=', 'sale')
+        ])
+        self.confirm_so_to_mo_get_name(sale_order)
+
 
 

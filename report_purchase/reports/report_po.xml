@@ -208,7 +208,7 @@
                                         <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
                                     </div>
                                     <div style='width:20%'>
-                                        <div><t t-esc="p.product_id.name" /></div>
+                                        <div><t t-esc="p.name" /></div>
                                         <div><t t-esc="p.product_id.description" /></div>
                                     </div>
                                     <div style='width:10%'>

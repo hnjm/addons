@@ -195,7 +195,7 @@
                         <t t-set="total_order" t-value="0"/>
                         <t t-foreach="o.order_line" t-as="p">
                             <t t-if="p.product_id">
-                                <t t-set="total_invoice" t-value="total_order + p.price_subtotal"/> 
+                                <t t-set="total_order" t-value="total_order + p.price_subtotal"/> 
                                 <t t-set="i" t-value="i+10"/>
                                 <div class="row detail_product">
                                     <div style='width:5%'>

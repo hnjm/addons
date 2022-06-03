@@ -96,23 +96,23 @@ class SaleOrder(models.Model):
         self.confirm_so_to_mo_get_name(self)
         return res
 
-    def loop_child_mrp_all_data(self, child_mrp, line):
+    def loop_child_mrp_all_data(self, child_mrp, line, name_so):
         model = self.env['mrp.production']
         arr = []
-        key = line.origin
+        key = name_so
         for item in child_mrp:
             child = model.search([('origin', '=', item.name)])
-            self.loop_child_mrp_all_data(child, line)
+            self.loop_child_mrp_all_data(child, line, name_so)
             arr.append({key: {
-                'so': line.origin,
+                'so': name_so,
                 'child_id': item.id
             }})
             for not_origin in child:
                 arr.append({key: {
-                    'so': line.origin,
+                    'so': name_so,
                     'child_id': not_origin.id
                 }})
-        res = [{key: {'so': line.origin, 'child_id': line.id}}] + arr
+        res = [{key: {'so': name_so, 'child_id': line.id}}] + arr
         return res
 
     def confirm_so_to_mo_get_name(self, sale_order):
@@ -127,8 +127,12 @@ class SaleOrder(models.Model):
             mrp = self.env['mrp.production'].browse(mrp_production_ids)
             for line in mrp:
                 child_mrp = model.search([('origin', '=', line.origin)])
+                arr_str = []
+                for ce in child_mrp:
+                    arr_str.append(ce.sale_id.name)
                 if child_mrp:
-                    res += self.loop_child_mrp_all_data(child_mrp, line)
+                    if arr_str:
+                        res += self.loop_child_mrp_all_data(child_mrp, line, arr_str[0])
         dd = defaultdict(list)
         arr_key, arr_res = [], []
         for d in res:

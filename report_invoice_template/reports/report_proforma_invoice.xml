@@ -35,6 +35,10 @@
                             </div>
                             <div class="col-3">
                                 <strong class='text-capitalize' >Consignee:</strong><br/>
+                                 <div class='address'>
+                                    <t t-esc="o.consignee" />
+                                    
+                                </div>
                             </div>
                             <div class="col-3" >
                                 <strong class='text-capitalize' >Bill to:</strong><br/>
@@ -146,10 +150,10 @@
                             <div style='width:5%'>
                                 <span>Line</span>
                             </div>
-                            <div style='width:10%'>
+                            <div style='width:15%'>
                                 <span>Item nr.</span>
                             </div>
-                             <div style='width:10%'>
+                             <div style='width:5%'>
                                 <span>Rev</span>
                             </div>
                             <div  style='width:30%'>
@@ -172,25 +176,25 @@
                             </div>
                         </div>
                         <t t-set="total_invoice" t-value="0"/>
-                        <t t-set="total_down_payment" t-value="0"/>
+                        <!-- <t t-set="total_down_payment" t-value="0"/> -->
                         <t t-set="i" t-value="0" />
                         <t t-foreach="o.invoice_line_ids" t-as="p">
                             <t t-if="p.product_id">
-                                <t t-if="p.sale_line_ids.is_downpayment">
+                                <!-- <t t-if="p.sale_line_ids.is_downpayment">
                                     <t t-set="total_down_payment" t-if="p.price_subtotal&lt;0" t-value="total_down_payment + p.price_subtotal * (-1)" />
                                     <t t-set="total_down_payment" t-if="p.price_subtotal&gt;=0" t-value="total_down_payment + p.price_subtotal" />  
-                                </t>
+                                </t> -->
                                 <t t-set="i" t-value="i+10"/>
                                 
-                                <div class="row detail_product" t-if="not p.sale_line_ids.is_downpayment and p.display_type!='line_section'">
+                                <div class="row detail_product">
                                     <t t-set="total_invoice" t-value="total_invoice + p.price_subtotal" /> 
                                     <div style='width:5%'>
                                         <span><t t-esc="i" /></span>
                                     </div>
-                                    <div style='width:10%'>
+                                    <div style='width:15%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></span>
                                     </div>
-                                    <div style='width:10%'>
+                                    <div style='width:5%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
                                     </div>
                                     <div style='width:30%'>
@@ -240,7 +244,7 @@
                                 <table class="table table-borderless m-0 info_total">
                                     <tr>
                                         <td>
-                                            <span>Uaxed Amount </span>
+                                            <span>Untaxed</span>
                                         </td>
                                         <td>
                                             <span><t t-esc="total_invoice" t-options='{"widget": "monetary", "display_currency": o.currency_id}' /></span>
@@ -258,14 +262,14 @@
                                             <span><t t-esc="total_invoice_tax" t-options='{"widget": "monetary", "display_currency": o.currency_id}' /></span>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <span>Down Payment</span>
                                         </td>
                                         <td>
                                             <t t-esc="total_down_payment" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                 </table>
                             </div>
                         </div>

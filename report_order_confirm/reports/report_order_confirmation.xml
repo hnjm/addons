@@ -151,21 +151,21 @@
                             <div style='width:5%'>
                                 <span>Line</span>
                             </div>
-                            <div style='width:10%'>
+                            <div style='width:15%'>
                                 <span>Item nr.</span>
                             </div>
                              <div style='width:5%'>
                                 <span>Rev</span>
                             </div>
-                            <div  style='width:20%'>
+                            <div  style='width:40%'>
                                 <span>Description</span>
                             </div>
-                            <div  style='width:15%'>
+                            <!-- <div  style='width:15%'>
                                 <span>Taxes</span>
                             </div>
                             <div class='text-right' style='width:10%'>
                                 <span>Lead Time</span>
-                            </div>
+                            </div> -->
                             <div class='text-right' style='width:10%'>
                                 <span>Quantity</span>
                             </div>
@@ -186,21 +186,21 @@
                                     <div style='width:5%'>
                                         <span><t t-esc="i" /></span>
                                     </div>
-                                    <div style='width:10%'>
+                                    <div style='width:15%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></span>
                                     </div>
                                     <div style='width:5%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
                                     </div>
-                                    <div style='width:20%'>
+                                    <div style='width:40%'>
                                         <span><t t-esc="p.product_id.name" /></span>
                                     </div>
-                                    <div style='width:15%'>
+                                    <!-- <div style='width:15%'>
                                         <span><t t-esc="', '.join(map(lambda x: (x.description or x.name), p.tax_id))"/></span>
                                     </div>
                                     <div class='text-right' style='width:10%'>
                                         <span><t t-esc="p.customer_lead" /></span>
-                                    </div>
+                                    </div> -->
                                     <div class='text-right' style='width:10%'>
                                         <span><t t-esc="p.product_uom_qty" t-options='{"widget": "float", "decimal_precision": "Product Unit of Measure"}' /></span>
                                     </div>
@@ -239,7 +239,7 @@
                                 <table class="table table-borderless m-0 info_total">
                                     <tr>
                                         <td>
-                                            <span>Uaxed Amount </span>
+                                            <span>Untaxed</span>
                                         </td>
                                         <td>
                                             <span><t t-esc="total_sale_order" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>
@@ -272,7 +272,8 @@
                         
                         <div class="row mt-3">
                             <div class="col-12 pl-4">
-                                We thank you for your interest and are looking forward to receive this order.
+                                <p>We thank you for your order and will produce the parts with our full expertise.</p>
+                                <p>For acceptance of this order confirmation, please send us back a signed version within 2 days after receival of this document.</p>
                             </div>
                         </div>
                         <div class="row mt-3">

@@ -258,7 +258,7 @@
                                 <table class="table table-borderless m-0 info_total">
                                     <tr>
                                         <td>
-                                            <span>Uaxed Amount </span>
+                                            <span>Untaxed</span>
                                         </td>
                                         <td>
                                             <span><t t-esc="total_order" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></span>

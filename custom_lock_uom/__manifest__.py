@@ -3,17 +3,18 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "REPORT INVOICE TEMPLATE",
+    "name": "LOCK UOM",
     "version": "15E",
-    "category": "ACCOUNT",
+    "category": "ALL",
     "license": "AGPL-3",
     "summary": "",
     "author": "Tran Trang",
-    "depends": ["account",'report_template_custom'],
+    "depends": ["sale", "sale_management",'purchase','account'],
     "data": [
-        'reports/report_invoices.xml',
-        'reports/report_proforma_invoice.xml',
-        'views/account_move.xml'
+        'views/sale_order.xml',
+        'views/account_move.xml',
+        'views/purchase_order.xml',
+
     ],
     "installable": True,
 }

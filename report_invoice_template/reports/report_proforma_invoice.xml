@@ -36,7 +36,7 @@
                             <div class="col-3">
                                 <strong class='text-capitalize' >Consignee:</strong><br/>
                                  <div class='address'>
-                                    <t t-esc="o.consignee" />
+                                    <t class='text-uppercase' t-esc="o.consignee" />
                                     
                                 </div>
                             </div>

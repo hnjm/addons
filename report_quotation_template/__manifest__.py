@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "summary": "",
     "author": "TUONG PHAM",
-    "depends": ["sale", "sale_management",'report_template_custom'],
+    "depends": ["sale", "sale_management",'report_template_custom','custom_sale_order'],
     "data": [
         'reports/report_sale_order.xml',
 

@@ -3,15 +3,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "REPORT PURCHASE TEMPLATE",
+    "name": "CUSTOM SALE ORDER",
     "version": "15E",
-    "category": "PURCHASE",
+    "category": "SALE",
     "license": "AGPL-3",
     "summary": "",
     "author": "Tran Trang",
-    "depends": ["purchase",'report_template_custom','custom_purchase_order'],
+    "depends": ["sale", "sale_management"],
     "data": [
-        'reports/report_po.xml',
+        'views/sale_order.xml',
 
     ],
     "installable": True,

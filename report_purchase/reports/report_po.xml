@@ -81,6 +81,9 @@
                                         
                                     </div>
                                     <div  class='point text-right'>:</div>
+                                    <div class='col-6'>
+                                        <span class="value_info"><t t-esc="o.rev"/></span>
+                                    </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-6'>

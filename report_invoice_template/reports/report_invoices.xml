@@ -145,7 +145,7 @@
                         
                                 <div class="row detail_product">
                                     <div style='width:35%'>
-                                        <span><t t-esc="p.product_id.name" /></span>
+                                        <span><t t-esc="p.product_id.get_name_report()" /></span>
                                     </div>
                                     <div style='width:15%'>
                                         <span><t t-esc="', '.join(map(lambda x: (x.description or x.name), p.tax_ids))"/></span>

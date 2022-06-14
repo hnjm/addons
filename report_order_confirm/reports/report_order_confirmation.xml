@@ -190,13 +190,13 @@
                                         <span><t t-esc="i" /></span>
                                     </div>
                                     <div style='width:15%'>
-                                        <span><t t-esc="p.product_id.product_tmpl_id.customer_reference" /></span>
+                                        <span><t t-esc="p.product_id.get_item_nr_report()" /></span>
                                     </div>
                                     <div style='width:5%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
                                     </div>
                                     <div style='width:40%'>
-                                        <span><t t-esc="p.product_id.name" /></span>
+                                        <span><t t-esc="p.product_id.get_name_report()" /></span>
                                     </div>
                                     <!-- <div style='width:15%'>
                                         <span><t t-esc="', '.join(map(lambda x: (x.description or x.name), p.tax_id))"/></span>

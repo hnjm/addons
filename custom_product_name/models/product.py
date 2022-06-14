@@ -22,5 +22,5 @@ class ProductInherit(models.Model):
         if len(self.product_template_attribute_value_ids)>0:
             return self.default_code
         else:
-            return self.product_tmpl_id.customer_reference
+            return self.product_tmpl_id.customer_reference or self.default_code
             

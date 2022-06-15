@@ -2,7 +2,7 @@
 <odoo>
     <data>
          <record id="action_report_sale_order_template" model="ir.actions.report">
-            <field name="name">Sale Order Template</field>
+            <field name="name">Quotation Confirmation</field>
             <field name="model">sale.order</field>
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">report_quotation_template.report_sale_order_template</field>
@@ -86,7 +86,7 @@
                             <div class='col-6'>
                                 <div class='row'>
                                     <div class='col-4'>
-                                        <span class='title_info'>Your Order nr.</span>
+                                        <span class='title_info'>Your Reference.</span>
                                         
                                     </div>
                                     <div  class='point text-right'>:</div>
@@ -150,18 +150,18 @@
                             <div style='width:5%'>
                                 <span>Line</span>
                             </div>
-                            <div style='width:10%'>
+                            <div style='width:15%'>
                                 <span>Item nr.</span>
                             </div>
                              <div style='width:5%'>
                                 <span>Rev</span>
                             </div>
-                            <div  style='width:30%'>
+                            <div  style='width:40%'>
                                 <span>Description</span>
                             </div>
-                            <div  style='width:15%'>
+                            <!-- <div  style='width:15%'>
                                 <span>Taxes</span>
-                            </div>
+                            </div> -->
                             <div class='text-right' style='width:10%'>
                                 <span>Quantity</span>
                             </div>
@@ -182,13 +182,13 @@
                                     <div style='width:5%'>
                                         <span><t t-esc="i" /></span>
                                     </div>
-                                    <div style='width:10%'>
+                                    <div style='width:15%'>
                                         <span><t t-esc="p.product_id.get_item_nr_report()" /></span>
                                     </div>
                                     <div style='width:5%'>
                                         <span><t t-esc="p.product_id.product_tmpl_id.revision"/></span>
                                     </div>
-                                    <div style='width:30%'>
+                                    <div style='width:40%'>
                                         <span><t t-esc="p.product_id.get_name_report()" /></span>
                                     </div>
                                     <div style='width:15%'>

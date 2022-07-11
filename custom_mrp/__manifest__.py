@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "summary": "",
     "author": "Thai Lao",
-    "depends": ["base", "mrp_subcontracting", "mrp_workorder", "custom_sale"],
+    "depends": ["base", "mrp_subcontracting", "mrp_workorder"],
     "data": [
         'views/stock_route.xml',
         'views/work_center_view.xml',

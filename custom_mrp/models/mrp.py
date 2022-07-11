@@ -9,6 +9,7 @@ class MRP(models.Model):
 
     sequence_mrp = fields.Integer('stt')
     mrp_ref = fields.Char('Ref')
+    old_name = fields.Char('Old Name')
 
     def action_confirm(self, is_outsource=False):
         self._check_company()

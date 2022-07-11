@@ -9,7 +9,7 @@
     "license": "AGPL-3",
     "summary": "",
     "author": "Thai Lao",
-    "depends": ["base", "sale", "sale_management", "account", "sale_mrp"],
+    "depends": ["base", "sale", "sale_management", "account", "sale_mrp", "custom_mrp", "purchase"],
     "data": [
         'views/sale_order_view.xml',
         ],

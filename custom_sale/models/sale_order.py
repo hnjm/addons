@@ -157,6 +157,7 @@ class SaleOrder(models.Model):
             for j, line_stt in enumerate(stt):
                 check = model.search([('id', '=', int(line_stt['child_id']))])
                 check.sequence_mrp = j
+                check.old_name = check.name
                 origin = self.env['mrp.production'].search([('origin', '=', check.name)])
                 convert_name = check.name.split('/')
                 res_name = convert_name[0] + '/' + convert_name[1]
@@ -172,6 +173,26 @@ class SaleOrder(models.Model):
             ('state', '=', 'sale')
         ])
         self.confirm_so_to_mo_get_name(sale_order)
+
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    def _btn_generate_origin(self):
+        p_ids = self.env.context
+        purchase_ids = self.browse(p_ids.get('active_ids'))
+        for rec in purchase_ids:
+            mrp_production_ids = rec.order_line.move_dest_ids.group_id.mrp_production_ids | rec.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
+            mrp = self.env['mrp.production'].browse(mrp_production_ids.ids)
+            if rec.origin:
+                space_txt = rec.origin.replace(" ", "")
+                origin_txt = space_txt.split(',')
+                for index, item in enumerate(mrp):
+                    if item.old_name and item.old_name in origin_txt:
+                        origin_txt[index] = item.name
+                rec.origin = ', '.join(origin_txt)
+
+
+
 
 
 

@@ -191,6 +191,18 @@ class PurchaseOrder(models.Model):
                         origin_txt[index] = item.name
                 rec.origin = ', '.join(origin_txt)
 
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    def _btn_generate_origin(self):
+        p_ids = self.env.context
+        stock_ids = self.browse(p_ids.get('active_ids'))
+        for rec in stock_ids:
+            mrp = self.env['mrp.production'].search([('old_name', '=', rec.origin)], limit=1)
+            if mrp:
+                rec.origin = mrp.name
+
+
 
 
 

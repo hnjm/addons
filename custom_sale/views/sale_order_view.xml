@@ -108,5 +108,12 @@
             <field name="state">code</field>
             <field name="code">action = records._btn_generate_origin()</field>
         </record>
+
+        <record id="action_generate_name_mo_to_stock" model="ir.actions.server">
+            <field name="name">Change name origin to Stock</field>
+            <field name="model_id" ref="stock.model_stock_picking"/>
+            <field name="state">code</field>
+            <field name="code">action = records._btn_generate_origin()</field>
+        </record>
     </data>
 </odoo>

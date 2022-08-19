@@ -177,18 +177,23 @@ class SaleOrder(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    flag_origin = fields.Char()
+
     def _btn_generate_origin(self):
         p_ids = self.env.context
         purchase_ids = self.browse(p_ids.get('active_ids'))
         for rec in purchase_ids:
+            if not rec.flag_origin:
+                rec.flag_origin = rec.origin
             mrp_production_ids = rec.order_line.move_dest_ids.group_id.mrp_production_ids | rec.order_line.move_ids.move_dest_ids.group_id.mrp_production_ids
-            mrp = self.env['mrp.production'].browse(mrp_production_ids.ids)
+            # mrp = self.env['mrp.production'].browse(mrp_production_ids.ids)
+            mrp = self.env['mrp.production'].search([])
             if rec.origin:
                 space_txt = rec.origin.replace(" ", "")
                 origin_txt = space_txt.split(',')
                 for index, item in enumerate(mrp):
                     if item.old_name and item.old_name in origin_txt:
-                        origin_txt[index] = item.name
+                        origin_txt[origin_txt.index(item.old_name)] = item.name
                 rec.origin = ', '.join(origin_txt)
 
 class StockPicking(models.Model):

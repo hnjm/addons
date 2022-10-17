@@ -11,6 +11,19 @@
                     <field name="partner_id" invisible="1"/>
                 </xpath>
             </field>
+        </record>
+
+
+        <record id="mrp_account_enterprise_workcenter_view_inherit" model="ir.ui.view">
+            <field name="name">mrp.account.enterprise.workcenter.view.inherit</field>
+            <field name="model">mrp.workcenter</field>
+            <field name="inherit_id" ref="mrp_account_enterprise.mrp_workcenter_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='costs_hour_account_id']" position="after">
+                    <field name="product_id"
+                           attrs="{'invisible' : [('is_outsource', '=', False)]}"/>
+                </xpath>
+            </field>
 
         </record>
     </data>

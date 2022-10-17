@@ -10,7 +10,7 @@ class WorkOrder(models.Model):
         res = super(WorkOrder, self).button_start()
         subcontract_details_per_picking = defaultdict(list)
         for record in self:
-            if record.workcenter_id.is_outsource:
+            if record.workcenter_id.is_outsource and record.workcenter_id.is_created_purchase is False:
                 operation_line = record.production_id.bom_id.operation_ids.filtered(lambda x: x.workcenter_id.id == record.workcenter_id.id)
                 val_po = {}
                 if operation_line:
@@ -53,10 +53,27 @@ class WorkOrder(models.Model):
                     for line in i.move_ids_without_package:
                         value = {
                             'product_id': line.product_id.id,
+                            'product_uom_id': line.product_id.uom_id.id,
                             'location_id': i.location_id.id or False,
                             'location_dest_id': i.location_dest_id.id or False,
                             'move_id': line.id,
                             'picking_id': i.id
                         }
                         self.env['stock.move.line'].create(value)
+                # YC5 ref. https://docs.google.com/spreadsheets/d/1WXF4D6uA0AdY3hQREy7elj_XA7M25Rc30OBlNWtmFyM/edit#gid=329401541
+                if record.workcenter_id and record.workcenter_id.product_id and operation_line and \
+                        operation_line[0].partner_id:
+                    vals = {
+                        'notes': record.name,
+                        'partner_id': operation_line[0].partner_id.id,
+                        'order_line': [(0, 0, {
+                            'product_id': record.workcenter_id.product_id.id,
+                            'product_uom_qty': record.production_id.product_qty if record.production_id else 1,
+                            'price_unit': operation_line[0].price_cost or 0,
+                        })]
+                    }
+                    self.env['purchase.order'].create(vals)
+                record.is_created_purchase = True
+
         return res
+

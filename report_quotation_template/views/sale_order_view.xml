@@ -1,1 +1,15 @@
-
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_quotation_view_order_form_inherit" model="ir.ui.view">
+        <field name="name">report.quotation.view.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//button[@name="action_quotation_send"]' position='before'>
+                <button name="action_generate_xlsx_quotation"
+                        string="Generate XLSX Quotation" type="object" states="draft" class="btn-primary"
+                        data-hotkey="g"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

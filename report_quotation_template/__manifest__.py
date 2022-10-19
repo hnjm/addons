@@ -11,8 +11,9 @@
     "author": "TUONG PHAM",
     "depends": ["sale", "sale_management",'report_template_custom','custom_sale_order'],
     "data": [
-        'reports/report_sale_order.xml',
-
+        'security/ir.model.access.csv',
+        'views/sale_order_view.xml',
+        'reports/report_sale_order.xml'
     ],
     "installable": True,
 }

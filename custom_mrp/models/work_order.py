@@ -63,18 +63,32 @@ class WorkOrder(models.Model):
                         }
                         self.env['stock.move.line'].create(value)
                 # YC5 ref. https://docs.google.com/spreadsheets/d/1WXF4D6uA0AdY3hQREy7elj_XA7M25Rc30OBlNWtmFyM/edit#gid=329401541
-                if record.workcenter_id and record.workcenter_id.product_id and operation_line and \
-                        operation_line[0].partner_id:
-                    vals = {
-                        'notes': record.name,
-                        'partner_id': operation_line[0].partner_id.id,
-                        'order_line': [(0, 0, {
-                            'product_id': record.workcenter_id.product_id.id,
-                            'product_uom_qty': record.production_id.product_qty if record.production_id else 1,
-                            'price_unit': operation_line[0].price_cost or 0,
-                        })]
-                    }
-                    self.env['purchase.order'].create(vals)
+                partner_id = operation_line[0].partner_id
+                if record.workcenter_id and record.workcenter_id.product_id and operation_line and partner_id:
+                    exist_po_line = self.env['purchase.order.line'].sudo().search([
+                        ('product_id', '=', record.workcenter_id.product_id.id),
+                        ('order_id.state', '=', 'draft'),
+                        ('order_id.partner_id.id', '=', partner_id.id),
+                    ], limit=1)
+                    if exist_po_line:
+                        qty = exist_po_line.product_qty
+                        new_origin = f'{exist_po_line.order_id.origin}, {record.production_id.name}' \
+                            if exist_po_line.order_id.origin else record.production_id.name
+                        # update
+                        exist_po_line.product_qty = qty + (record.production_id.product_qty if record.production_id else 1)
+                        exist_po_line.order_id.origin = new_origin
+                    else:
+
+                        vals = {
+                            'origin': record.production_id.name,
+                            'partner_id': partner_id,
+                            'order_line': [(0, 0, {
+                                'product_id': record.workcenter_id.product_id.id,
+                                'product_uom_qty': record.production_id.product_qty if record.production_id else 1,
+                                'price_unit': operation_line[0].price_cost or 0,
+                            })]
+                        }
+                        self.env['purchase.order'].create(vals)
                 record.is_created_purchase = True
 
         return res

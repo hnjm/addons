@@ -6,11 +6,13 @@ from collections import defaultdict
 class WorkOrder(models.Model):
     _inherit = 'mrp.workorder'
 
+    is_created_purchase = fields.Boolean(string="Is Created Purchase")
+
     def button_start(self):
         res = super(WorkOrder, self).button_start()
         subcontract_details_per_picking = defaultdict(list)
         for record in self:
-            if record.workcenter_id.is_outsource and record.workcenter_id.is_created_purchase is False:
+            if record.workcenter_id.is_outsource and record.is_created_purchase is False:
                 operation_line = record.production_id.bom_id.operation_ids.filtered(lambda x: x.workcenter_id.id == record.workcenter_id.id)
                 val_po = {}
                 if operation_line:

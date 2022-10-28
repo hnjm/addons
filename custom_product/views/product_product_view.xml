@@ -16,4 +16,15 @@
                 </xpath>
             </field>
         </record>
+
+    <record id="product_normal_form_view_inherit_custom_product_abc_v2" model="ir.ui.view">
+            <field name="name">product_normal_form_view_inherit_custom_product_abc_v2</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+               <xpath expr="//div[@name='standard_price_uom']" position="after">
+                    <field name="revision"/>
+                </xpath>
+            </field>
+        </record>
 </odoo>

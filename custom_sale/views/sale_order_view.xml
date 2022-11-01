@@ -12,6 +12,20 @@
         </record>
     </data>
     <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">view_order_form_inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="revision" string="REV"/>
+                </xpath>
+                <xpath expr="//page[@name='order_lines']/field[@name='order_line']/tree/field[@name='name']" position="replace">
+                    <field name="name" string="Product name"/>
+                </xpath>
+            </field>
+        </record>
+
         <record id="view_quotation_tree_inherit_custom_sale_abc" model="ir.ui.view">
             <field name="name">view_quotation_tree_inherit_custom_sale_abc</field>
             <field name="model">sale.order</field>

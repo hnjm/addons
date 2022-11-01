@@ -174,6 +174,13 @@ class SaleOrder(models.Model):
         ])
         self.confirm_so_to_mo_get_name(sale_order)
 
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    revision = fields.Char(string='Revision', related='product_id.product_tmpl_id.revision')
+
+
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
@@ -196,6 +203,7 @@ class PurchaseOrder(models.Model):
                         origin_txt[origin_txt.index(item.old_name)] = item.name
                 rec.origin = ', '.join(origin_txt)
 
+
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
@@ -206,10 +214,3 @@ class StockPicking(models.Model):
             mrp = self.env['mrp.production'].search([('old_name', '=', rec.origin)], limit=1)
             if mrp:
                 rec.origin = mrp.name
-
-
-
-
-
-
-

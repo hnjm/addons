@@ -6,8 +6,8 @@
             <field name="inherit_id" ref="product.product_template_search_view"/>
             <field name="arch" type="xml">
                <xpath expr="//field[@name='name']" position="after">
-                   <field name="default_code"/>
-                   <field name="customer_reference"/>
+                   <field name="default_code" string="Drawing Nr."/>
+                   <field name="customer_reference" string="Internal Reference"/>
                 </xpath>
             </field>
     </record>

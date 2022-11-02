@@ -7,7 +7,7 @@ from collections import defaultdict
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    customer_reference = fields.Char(string='Customer Reference')
+    customer_reference = fields.Char(string='Internal Reference')
     fast_accounting_no = fields.Char(string='FAST accounting No.')
     revision = fields.Char(string='Revision')
     material = fields.Char(string='Material')

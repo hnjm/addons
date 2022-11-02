@@ -24,7 +24,7 @@
             <field name="arch" type="xml">
                <xpath expr="//div[@name='standard_price_uom']" position="after">
                     <field name="revision"/>
-                    <field name="customer_reference"/>
+                    <field name="customer_reference" string="Internal Reference"/>
                 </xpath>
             </field>
         </record>

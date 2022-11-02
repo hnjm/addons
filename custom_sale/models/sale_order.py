@@ -180,6 +180,14 @@ class SaleOrderLine(models.Model):
 
     revision = fields.Char(string='Revision', related='product_id.product_tmpl_id.revision')
 
+    @api.onchange('product_id')
+    def product_id_change(self):
+        super(SaleOrderLine, self).product_id_change()
+        for line in self:
+            if not line.product_id or line.display_type in ('line_section', 'line_note'):
+                continue
+            line.name = line.product_id.name if line.product_id else ''
+
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'

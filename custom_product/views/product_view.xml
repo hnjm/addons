@@ -10,7 +10,7 @@
                    <field name="customer_reference"/>
                 </xpath>
             </field>
-        </record>
+    </record>
 
     <record id="product_template_only_form_view_inherit_custom_product_abc" model="ir.ui.view">
             <field name="name">product_template_only_form_view_inherit_custom_product_abc</field>
@@ -38,4 +38,19 @@
         <field name="numbercall">-1</field>
         <field name="active">False</field>
     </record>
+
+    <record id="product_normal_form_view_abc_inherit" model="ir.ui.view">
+        <field name="name">product_normal_form_view_abc_inherit</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='default_code']" position="attributes">
+                <attribute name="string">Drawing Nr.</attribute>
+            </xpath>
+            <xpath expr="//field[@name='customer_reference']" position="attributes">
+                <attribute name="string">Internal Reference</attribute>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>

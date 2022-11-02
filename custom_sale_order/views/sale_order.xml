@@ -13,7 +13,9 @@
             <xpath expr="//field[@name='user_id']" position="before">
                 <field name="rev"/>
             </xpath>
-            
+            <xpath expr="//field[@name='note']" position="replace">
+                <field name="note" nolabel="1" class="oe-bordered-editor" widget="html" options="{'style-inline': true, 'codeview': true }" />
+            </xpath>
         </field>
     </record>
 </odoo>

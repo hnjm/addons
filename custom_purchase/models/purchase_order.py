@@ -145,3 +145,11 @@ class PurchaseOrderLine(models.Model):
             'taxes_id': [(6, 0, taxes.ids)],
             'order_id': po.id,
         }
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        super(PurchaseOrderLine, self).onchange_product_id()
+        for line in self:
+            if not line.product_id or line.display_type in ('line_section', 'line_note'):
+                continue
+            line.name = line.product_id.name if line.product_id else ''

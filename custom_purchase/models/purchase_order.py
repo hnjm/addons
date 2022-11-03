@@ -104,6 +104,8 @@ class OptionalProduct(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
+    product_id = fields.Many2one('product.product', string='Drawing Nr.', domain=[('purchase_ok', '=', True)], change_default=True)
+
     @api.model
     def _prepare_purchase_order_line(self, product_id, product_qty, product_uom, company_id, supplier, po):
         partner = supplier.name

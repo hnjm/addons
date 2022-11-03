@@ -258,8 +258,29 @@
                             </div>
                         </div>
                         <div class="row line_note">
-                            <div class="col-12 space_row">
-                                <span t-field="o.note"/>
+                            <div class="col-12 pl-4">
+                                <style>
+                                    table.table-bordered {
+                                    border-collapse: collapse;
+                                    }
+                                    table.table-bordered, .table-bordered tr, .table-bordered td{
+                                    border: 0px !important;
+                                    border-left-width: 0px !important;
+                                    }
+                                    .table-bordered {
+                                    margin-left: -30px !important;
+                                    font-size: 1em !important;
+                                    }
+                                    .table-bordered td {
+                                    color: #fff !important;
+                                    font-size: 1em !important;
+                                    font-weight: bold !important;
+                                    }
+                                    .table-bordered tr &gt; td:first-of-type {
+                                    width: 16% !important;
+                                    }
+                                </style>
+                                <div t-field="o.note" widget="html" style="font-size: 1em !important;border: 0px !important; max-width: 800px;"/>
                             </div>
                         </div>
                          <div class="row mt-3">

@@ -81,7 +81,7 @@ class WorkOrder(models.Model):
 
                         vals = {
                             'origin': record.production_id.name,
-                            'partner_id': partner_id,
+                            'partner_id': partner_id.id,
                             'order_line': [(0, 0, {
                                 'product_id': record.workcenter_id.product_id.id,
                                 'product_uom_qty': record.production_id.product_qty if record.production_id else 1,

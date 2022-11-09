@@ -36,7 +36,4 @@ class MrpProduction(models.Model):
 class MrpWorkorder(models.Model):
     _inherit = 'mrp.workorder'
 
-    product_id = fields.Many2one(
-        'product.product', 'Drawing Nr.', check_company=True,
-        domain="[('type', 'in', ['product', 'consu']), '|', ('company_id', '=', False), ('company_id', '=', company_id)]",
-        required=True, states={'done': [('readonly', True)]})
+    product_id = fields.Many2one(string="Drawing Nr", related='production_id.product_id', readonly=True, store=True, check_company=True)

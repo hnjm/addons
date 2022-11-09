@@ -1,6 +1,7 @@
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
 from collections import defaultdict
+import re
 
 
 class WorkOrder(models.Model):
@@ -70,6 +71,7 @@ class WorkOrder(models.Model):
                         ('order_id.state', '=', 'draft'),
                         ('order_id.partner_id.id', '=', partner_id.id),
                     ], limit=1)
+                    name = f"{record.workcenter_id.product_id.name} {re.sub(r'<.*?>', '', operation_line[0].note) or ''}"
                     if exist_po_line:
                         qty = exist_po_line.product_qty
                         new_origin = f'{exist_po_line.order_id.origin}, {record.production_id.name}' \
@@ -77,12 +79,13 @@ class WorkOrder(models.Model):
                         # update
                         exist_po_line.product_qty = qty + (record.production_id.product_qty if record.production_id else 1)
                         exist_po_line.order_id.origin = new_origin
+                        exist_po_line.name = name
                     else:
-
                         vals = {
                             'origin': record.production_id.name,
                             'partner_id': partner_id.id,
                             'order_line': [(0, 0, {
+                                'name': name,
                                 'product_id': record.workcenter_id.product_id.id,
                                 'product_uom_qty': record.production_id.product_qty if record.production_id else 1,
                                 'price_unit': operation_line[0].price_cost or 0,

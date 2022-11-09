@@ -267,26 +267,30 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row line_note">
-                            <div class="col-12 pl-4">
-                                <style>
-                                    table {
-                                        max-width: 668px;
-                                        border-collapse: collapse;
-                                    }
-                                    table, tr, td{
-                                        border: 0px !important;
-                                        border-left-width: 0px !important;
-                                    }
-                                    .table-bordered {
-                                        margin-left: -20px !important;
-                                    }
-                                    .table-bordered tr > td:first-of-type {
-                                        width: 19% !important;
-                                    }
-                                </style>
-                                <div t-field="o.note" widget="html" style="border: 0px !important; max-width: 668px;"/>
-                            </div>
+                    <div class="row line_note">
+                        <div class="col-12 pl-4">
+                            <style>
+                                table {
+                                    border-collapse: collapse;
+                                }
+                                table, tr, td{
+                                border: 0px !important;
+                                border-left-width: 0px !important;
+                                }
+                                .table-bordered {
+                                margin-left: -20px !important;
+                                }
+                                .table-bordered span{
+                                color: black !important;
+                                font-size: 1em !important;
+                                font-weight: 500 !important;
+                                }
+                                .table-bordered tr &gt; td:first-of-type {
+                                width: 19% !important;
+                                }
+                            </style>
+                            <div t-field="o.note" style="border: 0px !important; max-width: 800px;"/>
+
                         </div>
                         
                         <div class="row mt-3">
